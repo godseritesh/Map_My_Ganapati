@@ -4,8 +4,6 @@
 
 A modern navigation app to help devotees find and navigate to Ganapati pandals during the festival. Built with Next.js, Supabase, and Leaflet.js.
 
-
-
 ## 🚀 Features
 
 - **Interactive Map**: View all Ganapati pandals on an interactive OpenStreetMap
