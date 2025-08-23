@@ -1,4 +1,6 @@
-# ![marker](public/markers/img1.png)
+<p align="center">
+  <img src="public/markers/img1.png" alt="marker" width="300" height="300"/>
+</p>
 
 A modern navigation app to help devotees find and navigate to Ganapati pandals during the festival. Built with Next.js, Supabase, and Leaflet.js.
 
