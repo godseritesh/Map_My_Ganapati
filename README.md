@@ -1,4 +1,4 @@
-# 🐘 MapMyGanapati
+# ![marker](public/markers/img1.png)
 
 A modern navigation app to help devotees find and navigate to Ganapati pandals during the festival. Built with Next.js, Supabase, and Leaflet.js.
 
