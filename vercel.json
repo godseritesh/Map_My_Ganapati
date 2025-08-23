@@ -10,7 +10,9 @@
     }
   },
   "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key"
+    "NEXT_PUBLIC_SUPABASE_URL": "https://ycdcqjpmhbyanxeylchu.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljZGNxanBtaGJ5YW54ZXlsY2h1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5NDQ1MDAsImV4cCI6MjA3MTUyMDUwMH0._OSbcJ2Lcd0ZD9JbTPpPp5Q6jKsKV3FRgCxy2v8He2g",
+    "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY": "your-google-maps-api-key-here",
+    "NEXT_PUBLIC_SITE_URL": "https://mapmyganapati.vercel.app"
   }
 }
