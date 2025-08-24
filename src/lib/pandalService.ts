@@ -1,9 +1,9 @@
 import { supabase } from './supabase'
-import { PandalLocation } from '@/types/mandal'
+import { PandalLocation } from '@/types/pandal'
 import { CrowdService } from './crowdService'
 
 export class PandalService {
-  // Get all mandals
+  // Get all pandals
   static async getAllPandals(): Promise<PandalLocation[]> {
     try {
       // Check if we have valid Supabase configuration
@@ -16,7 +16,7 @@ export class PandalService {
       }
 
       const { data, error } = await supabase
-        .from('mandals')
+        .from('pandals')
         .select('*')
         .order('name')
       
@@ -25,9 +25,9 @@ export class PandalService {
         return this.getFallbackData()
       }
       
-      const pandalsWithCrowd = (data || this.getFallbackData()).map(mandal => ({
-        ...mandal,
-        crowd_data: CrowdService.generateCrowdData(mandal)
+      const pandalsWithCrowd = (data || this.getFallbackData()).map(pandal => ({
+        ...pandal,
+        crowd_data: CrowdService.generateCrowdData(pandal)
       }))
       return pandalsWithCrowd
     } catch (error) {
@@ -36,26 +36,20 @@ export class PandalService {
     }
   }
 
-  // Get mandals near a location (within radius in km)
+  // Get pandals near a location (within radius in km)
   static async getNearbyPandals(
     latitude: number, 
     longitude: number, 
-    radiusKm: number = 10
+    radiusKm: number
   ): Promise<PandalLocation[]> {
     try {
-      // For Supabase with PostGIS, we can use proper geospatial queries
-      // For now, using client-side filtering as fallback
       const allPandals = await this.getAllPandals()
-      
-      return allPandals.filter(mandal => {
-        const distance = this.calculateDistance(
-          latitude, longitude, 
-          mandal.latitude, mandal.longitude
-        )
+      return allPandals.filter(pandal => {
+        const distance = this.calculateDistance(latitude, longitude, pandal.latitude, pandal.longitude)
         return distance <= radiusKm
       })
     } catch (error) {
-      console.error('Error fetching nearby mandals:', error)
+      console.error('Error fetching nearby pandals:', error)
       return this.getFallbackData()
     }
   }
@@ -83,13 +77,13 @@ export class PandalService {
     return deg * (Math.PI/180)
   }
 
-  // Add a new mandal
-  static async addPandal(mandal: Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+  // Add a new pandal
+  static async addPandal(pandal: Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
     try {
       const { data, error } = await supabase
-        .from('mandals')
+        .from('pandals')
         .insert([{
-          ...mandal,
+          ...pandal,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }])
@@ -99,7 +93,7 @@ export class PandalService {
       if (error) throw error
       return data.id
     } catch (error) {
-      console.error('Error adding mandal:', error)
+      console.error('Error adding pandal:', error)
       throw error
     }
   }
@@ -107,9 +101,9 @@ export class PandalService {
   // Get fallback data when database is not available
   static getFallbackData(): PandalLocation[] {
     const sampleData = this.getSamplePandals()
-    return sampleData.map((mandal, index) => {
+    return sampleData.map((pandal, index) => {
       const pandalWithMeta = {
-        ...mandal,
+        ...pandal,
         id: `fallback-${index}`,
         created_at: new Date(),
         updated_at: new Date()
@@ -121,12 +115,12 @@ export class PandalService {
     })
   }
 
-  // Get sample data for development and fallback - Real Pune Ganpati mandals
+  // Get sample data for development and fallback - Real Pune Ganapati Pandals
   static getSamplePandals(): Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>[] {
     return [
       {
         name: "Shri Kasba Ganpati",
-        description: "The first and most revered Ganpati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
+        description: "The first and most revered Ganapati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
         address: "159, Kasba Peth Road, Kasba Peth, Pune, Maharashtra 411002",
         latitude: 18.5158,
         longitude: 73.8567,
@@ -147,11 +141,11 @@ export class PandalService {
         rating: 4.8
       },
       {
-        name: "Dagdusheth Halwai Ganpati",
+        name: "Dagdusheth Ganapati",
         description: "One of the most famous Ganpati mandals in Pune, attracting thousands of devotees daily. Known for its rich history and grandeur.",
         address: "250, Chhatrapati Shivaji Maharaj Road, Mehunpura, Budhwar Peth, Pune, Maharashtra 411002",
-        latitude: 18.5195,
-        longitude: 73.8553,
+        latitude: 18.5164,
+        longitude: 73.8561,
         contact: "+91-20-2445-1453",
         timings: "4:30 AM - 12:00 AM",
         special_features: ["Most Famous", "Gold Ornaments", "Live Telecast", "24/7 Queue Management"],
