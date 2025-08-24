@@ -223,7 +223,7 @@ export default function SimpleLocationButton({ onLocationUpdate, disabled }: Sim
           id="location-instructions"
           className="text-xs text-gray-500 text-center max-w-xs"
         >
-          <p className="leading-tight">Click to find ganpati mandals near your location</p>
+          <p className="leading-tight">Click to find Ganpati mandals near your location</p>
         </div>
       )}
     </div>

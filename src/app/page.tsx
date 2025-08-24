@@ -334,9 +334,9 @@ export default function HomePage() {
           <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 bg-white/95 backdrop-blur-md rounded-xl p-2 sm:p-3 lg:p-4 text-xs text-gray-600 max-w-xs shadow-lg border border-white/20">
             <div className="flex items-center gap-1 sm:gap-2 mb-2">
               <span className="text-base sm:text-lg">🚀</span>
-              <p className="font-bold text-orange-700 text-xs sm:text-sm">ganpati Navigator</p>
+              <p className="font-bold text-orange-700 text-xs sm:text-sm">Ganpati Navigator</p>
             </div>
-            <p className="mb-2 leading-relaxed text-xs">Find and navigate to ganpati mandals near you. Click on markers for details and directions.</p>
+            <p className="mb-2 leading-relaxed text-xs">Find and navigate to Ganpati mandals near you. Click on markers for details and directions.</p>
             
             {/* Location Status Indicator */}
             <div className="mb-2 p-2 rounded-lg border">

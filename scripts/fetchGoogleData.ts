@@ -22,7 +22,7 @@ async function fetchAndUpdatePandalData() {
     }
 
     // Search for famous Pune mandals on Google Maps
-    console.log('📍 Searching for famous Pune ganpati mandals...')
+    console.log('📍 Searching for famous Pune Ganpati mandals...')
     const googleResults = await GooglePlacesService.searchFamousPuneMandals()
     
     if (googleResults.length === 0) {
@@ -128,7 +128,7 @@ async function fetchAndUpdatePandalData() {
 // Helper functions to provide additional context for known mandals
 function getDescriptionForMandal(name: string): string {
   const descriptions: { [key: string]: string } = {
-    'Shri Kasba Ganpati': "The first and most revered ganpati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
+    'Shri Kasba Ganpati': "The first and most revered Ganpati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
     'Tambdi Jogeshwari Ganpati': "Known as the protector of Pune, established in 1893. Associated with the Tambdi Jogeshwari Temple dedicated to Goddess Durga.",
     'Dagdusheth Halwai Ganpati Temple': "One of the most famous Ganpati mandals in Pune, attracting thousands of devotees daily. Known for its rich history and grandeur.",
     'Tulshibaug Ganpati': "Features one of the largest Ganpati idols in Pune. Established in 1901 with magnificent decorations.",
@@ -140,7 +140,7 @@ function getDescriptionForMandal(name: string): string {
     if (name.includes(key)) return desc
   }
   
-  return `Famous ganpati mandal in Pune with rich cultural heritage.`
+  return `Famous Ganpati mandal in Pune with rich cultural heritage.`
 }
 
 function getTimingsForMandal(name: string): string {

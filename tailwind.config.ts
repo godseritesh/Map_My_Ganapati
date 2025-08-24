@@ -15,7 +15,7 @@ const config: Config = {
           600: '#ea580c',
           700: '#c2410c',
         },
-        ganpati: {
+        Ganpati: {
           saffron: '#FF9933',
           red: '#DC2626',
           gold: '#FCD34D',

@@ -1,5 +1,5 @@
 /**
- * Script to seed Supabase database with sample ganpati mandal data
+ * Script to seed Supabase database with sample Ganpati mandal data
  * Run with: npm run seed
  */
 
@@ -55,7 +55,7 @@ async function seedDatabase() {
     })
     
     console.log('🎉 Database seeding completed successfully!')
-    console.log('📱 Your ganpati Navigator app is ready with sample data!')
+    console.log('📱 Your Ganpati Navigator app is ready with sample data!')
     
   } catch (error) {
     console.error('❌ Error seeding database:', error)

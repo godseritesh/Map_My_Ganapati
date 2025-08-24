@@ -2,17 +2,17 @@
   <img src="public/markers/img1.png" alt="marker" width="300" height="300"/>
 </p>
 
-A modern navigation app to help devotees find and navigate to ganpati mandals during the festival. Built with Next.js, Supabase, and Leaflet.js.
+A modern navigation app to help devotees find and navigate to Ganpati mandals during the festival. Built with Next.js, Supabase, and Leaflet.js.
 
 ## 🚀 Features
 
-- **Interactive Map**: View all ganpati mandals on an interactive OpenStreetMap
+- **Interactive Map**: View all Ganpati mandals on an interactive OpenStreetMap
 - **Location-based Search**: Find mandals near your current location
 - **Detailed Information**: View mandal details, timings, contact info, and special features
 - **Navigation**: Get directions to any mandal using Google Maps
 - **Admin Panel**: Password-protected admin interface for adding new mandals
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Festival Theme**: Beautiful saffron and red themed UI celebrating ganpati
+- **Festival Theme**: Beautiful saffron and red themed UI celebrating Ganpati
 - **Free Database**: Uses Supabase PostgreSQL with generous free tier
 
 ## 🛠 Tech Stack
@@ -159,13 +159,13 @@ NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password_here
 
 ## 🗺️ Sample Data
 
-The app includes sample data for famous ganpati mandals:
+The app includes sample data for famous Ganpati mandals:
 
 **Mumbai mandals:**
 - **Lalbaugcha Raja** - The most famous mandal in Mumbai
 - **Ganesh Galli Mumbaicha Raja** - Historic mandal with traditional celebrations
 - **GSB Seva Mandal King Circle** - Known for creative thematic decorations
-- **Khetwadi Cha Ganraj** - Features one of the tallest ganpati idols
+- **Khetwadi Cha Ganraj** - Features one of the tallest Ganpati idols
 
 **Pune mandals:**
 - **Shri Kasba Ganpati** - First among Pune's Manache Ganpati
@@ -295,7 +295,7 @@ interface PandalLocation {
 
 ### Demo Mode Testing
 If using demo mode, you should see:
-- 8 Pune ganpati mandals loaded
+- 8 Pune Ganpati mandals loaded
 - Map centered on Pune (18.52, 73.86)
 - Orange elephant markers (🐘) for each mandal
 - Console messages starting with `📝 Using fallback data`
@@ -336,10 +336,10 @@ This project is open source and available under the [MIT License](LICENSE).
 - Leaflet.js for mapping functionality
 - Supabase for backend services
 - Vercel for hosting
-- All the ganpati mandals and devotees who make this festival special
+- All the Ganpati mandals and devotees who make this festival special
 
 ---
 
 **Ganpati Bappa Morya! 🙏**
 
-Built with ❤️ for the ganpati festival community.
+Built with ❤️ for the Ganpati festival community.

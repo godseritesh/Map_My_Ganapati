@@ -130,7 +130,7 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
     }
   }, [mandals, onPandalCountUpdate])
 
-  // Custom icon for ganpati mandals with crowd indicator - responsive sizing
+  // Custom icon for Ganpati mandals with crowd indicator - responsive sizing
   const createPandalIcon = (mandal: PandalLocation) => {
     const crowdLevel = mandal.crowd_data?.current_crowd_level || 'low'
     const crowdEmoji = CrowdService.getCrowdLevelEmoji(crowdLevel)
@@ -175,7 +175,7 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
           position: relative;
           animation: pulse 2s infinite;
         ">
-          <img src="/markers/img1.png" alt="ganpati" style="width: ${fontSize + 4}px; height: ${fontSize + 4}px; object-fit: contain;" />
+          <img src="/markers/img1.png" alt="Ganpati" style="width: ${fontSize + 4}px; height: ${fontSize + 4}px; object-fit: contain;" />
           <div style="
             position: absolute;
             top: ${isMobile ? -3 : -4}px;
@@ -269,10 +269,10 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
           <div className="relative">
             <div className="animate-spin rounded-full h-16 w-16 border-4 border-orange-200 border-t-orange-600 mx-auto"></div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <img src="/markers/img1.png" alt="ganpati" className="w-12 h-12 animate-pulse object-contain" />
+              <img src="/markers/img1.png" alt="Ganpati" className="w-12 h-12 animate-pulse object-contain" />
             </div>
           </div>
-          <p className="mt-6 text-gray-700 font-medium">Loading ganpati mandals...</p>
+          <p className="mt-6 text-gray-700 font-medium">Loading Ganpati mandals...</p>
           <p className="mt-2 text-sm text-gray-500">Finding the best mandals near you</p>
         </div>
       </div>

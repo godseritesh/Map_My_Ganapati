@@ -33,11 +33,11 @@ export default function Header({ onLocationUpdate, userLocation }: HeaderProps) 
           {/* Logo and Title */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white/20 rounded-full backdrop-blur-sm flex-shrink-0">
-              <img src="/markers/img1.png" alt="ganpati" className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 object-contain" />
+              <img src="/markers/img1.png" alt="Ganpati" className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 object-contain" />
             </div>
             <div className="min-w-0 flex-1">
               <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent truncate">
-                ganpati Navigator
+                Ganpati Navigator
               </h1>
               <p className="text-orange-100 text-xs sm:text-sm flex items-center gap-1 truncate">
                 <Compass className="w-2.5 h-2.5 sm:w-3 sm:h-3 flex-shrink-0" />

@@ -25,8 +25,8 @@ interface SuggestionRoute {
 const suggestionRoutes: SuggestionRoute[] = [
   {
     id: 'manache_5',
-    title: 'Manache 5 ganpati',
-    description: 'Visit the 5 most revered and traditional ganpati mandals in Pune',
+    title: 'Manache 5 Ganpati',
+    description: 'Visit the 5 most revered and traditional Ganpati mandals in Pune',
     icon: Star,
     color: 'text-yellow-600',
     bgColor: 'bg-yellow-50 border-yellow-200',

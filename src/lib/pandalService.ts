@@ -121,12 +121,12 @@ export class PandalService {
     })
   }
 
-  // Get sample data for development and fallback - Real Pune ganpati mandals
+  // Get sample data for development and fallback - Real Pune Ganpati mandals
   static getSamplePandals(): Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>[] {
     return [
       {
         name: "Shri Kasba Ganpati",
-        description: "The first and most revered ganpati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
+        description: "The first and most revered Ganpati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
         address: "159, Kasba Peth Road, Kasba Peth, Pune, Maharashtra 411002",
         latitude: 18.5158,
         longitude: 73.8567,

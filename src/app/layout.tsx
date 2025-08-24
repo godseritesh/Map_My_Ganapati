@@ -5,13 +5,13 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ganpati Navigator Pune - Find Famous mandals',
-  description: 'Navigate to famous ganpati mandals in Pune during the festival',
-  keywords: 'ganpati, Ganesh, mandal, Navigation, Festival, Pune, Maharashtra, Kasba Ganpati, Dagdusheth Halwai',
-  authors: [{ name: 'ganpati Navigator Team' }],
+  title: 'Ganpati Navigator Pune - Find Famous mandals',
+  description: 'Navigate to famous Ganpati mandals in Pune during the festival',
+  keywords: 'Ganpati, Ganesh, mandal, Navigation, Festival, Pune, Maharashtra, Kasba Ganpati, Dagdusheth Halwai',
+  authors: [{ name: 'Ganpati Navigator Team' }],
   openGraph: {
-    title: 'ganpati Navigator Pune',
-    description: 'Find and navigate to famous ganpati mandals in Pune',
+    title: 'Ganpati Navigator Pune',
+    description: 'Find and navigate to famous Ganpati mandals in Pune',
     type: 'website',
   },
   manifest: '/manifest.json',

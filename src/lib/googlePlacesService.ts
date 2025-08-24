@@ -94,7 +94,7 @@ export class GooglePlacesService {
   }
 
   /**
-   * Search for ganpati temples/mandals near a location
+   * Search for Ganpati temples/mandals near a location
    */
   static async searchNearbyganpatiMandals(
     latitude: number, 
@@ -111,7 +111,7 @@ export class GooglePlacesService {
         `${this.BASE_URL}/nearbysearch/json?` +
         `location=${latitude},${longitude}&` +
         `radius=${radius}&` +
-        `keyword=ganpati ganesh temple mandal&` +
+        `keyword=Ganpati ganesh temple mandal&` +
         `type=hindu_temple&` +
         `key=${this.API_KEY}`
       )
@@ -144,7 +144,7 @@ export class GooglePlacesService {
   }
 
   /**
-   * Batch search for multiple famous Pune ganpati mandals
+   * Batch search for multiple famous Pune Ganpati mandals
    */
   static async searchFamousPuneMandals(): Promise<Array<{
     name: string
@@ -183,7 +183,7 @@ export class GooglePlacesService {
   ) {
     return {
       name: googlePlace.name,
-      description: additionalInfo?.description || `Famous ganpati mandal in Pune`,
+      description: additionalInfo?.description || `Famous Ganpati mandal in Pune`,
       address: googlePlace.formatted_address,
       latitude: googlePlace.geometry.location.lat,
       longitude: googlePlace.geometry.location.lng,

@@ -1,7 +1,7 @@
 {
-  "name": "ganpati Navigator",
-  "short_name": "ganpati Nav",
-  "description": "Find and navigate to ganpati mandals near you during the festival",
+  "name": "Ganpati Navigator",
+  "short_name": "Ganpati Nav",
+  "description": "Find and navigate to Ganpati mandals near you during the festival",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FF9933",
