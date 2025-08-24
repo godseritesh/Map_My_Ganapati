@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import { PandalLocation } from '@/types/pandal'
+import { PandalLocation } from '../types/mandal'
 import { CrowdService } from './crowdService'
 
 export class PandalService {
