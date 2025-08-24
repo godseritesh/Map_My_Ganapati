@@ -147,15 +147,15 @@ export class PandalService {
         rating: 4.8
       },
       {
-        name: "Dagdusheth Halwai Ganpati",
-        description: "One of the most famous Ganpati mandals in Pune, attracting thousands of devotees daily. Known for its rich history and grandeur.",
-        address: "250, Chhatrapati Shivaji Maharaj Road, Mehunpura, Budhwar Peth, Pune, Maharashtra 411002",
-        latitude: 18.5195,
-        longitude: 73.8553,
-        contact: "+91-20-2445-1453",
-        timings: "4:30 AM - 12:00 AM",
-        special_features: ["Most Famous", "Gold Ornaments", "Live Telecast", "24/7 Queue Management"],
-        rating: 4.9
+  name: "Dagdusheth Halwai Ganpati",
+  description: "One of the most famous Ganpati mandals in Pune, attracting thousands of devotees daily. Known for its rich history and grandeur.",
+  address: "250, Chhatrapati Shivaji Maharaj Road, Mehunpura, Budhwar Peth, Pune, Maharashtra 411002",
+  latitude: 18.5164,
+  longitude: 73.8561,
+  contact: "+91-20-2445-1453",
+  timings: "4:30 AM - 12:00 AM",
+  special_features: ["Most Famous", "Gold Ornaments", "Live Telecast", "24/7 Queue Management"],
+  rating: 4.9
       },
       {
         name: "Tulshibaug Ganpati",
