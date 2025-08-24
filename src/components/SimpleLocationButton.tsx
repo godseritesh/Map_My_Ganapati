@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { MapPin, Loader2, AlertCircle, CheckCircle } from 'lucide-react'
-import { UserLocation } from '@/types/pandal'
+import { UserLocation } from '@/types/mandal'
 
 interface SimpleLocationButtonProps {
   onLocationUpdate: (location: UserLocation) => void
@@ -167,7 +167,7 @@ export default function SimpleLocationButton({ onLocationUpdate, disabled }: Sim
           } 
           text-white
         `}
-        aria-label={loading ? 'Getting your location' : success ? 'Location found successfully' : 'Find nearby pandals using your location'}
+        aria-label={loading ? 'Getting your location' : success ? 'Location found successfully' : 'Find nearby mandals using your location'}
         aria-describedby={error ? 'location-error' : success ? 'location-success' : 'location-instructions'}
       >
         {loading ? (
@@ -185,8 +185,8 @@ export default function SimpleLocationButton({ onLocationUpdate, disabled }: Sim
         ) : (
           <>
             <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="hidden sm:inline">Find Nearby Pandals</span>
-            <span className="sm:hidden">Find Pandals</span>
+            <span className="hidden sm:inline">Find Nearby mandals</span>
+            <span className="sm:hidden">Find mandals</span>
           </>
         )}
       </button>
@@ -223,7 +223,7 @@ export default function SimpleLocationButton({ onLocationUpdate, disabled }: Sim
           id="location-instructions"
           className="text-xs text-gray-500 text-center max-w-xs"
         >
-          <p className="leading-tight">Click to find Ganapati pandals near your location</p>
+          <p className="leading-tight">Click to find ganpati mandals near your location</p>
         </div>
       )}
     </div>

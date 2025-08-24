@@ -2,17 +2,17 @@
   <img src="public/markers/img1.png" alt="marker" width="300" height="300"/>
 </p>
 
-A modern navigation app to help devotees find and navigate to Ganapati pandals during the festival. Built with Next.js, Supabase, and Leaflet.js.
+A modern navigation app to help devotees find and navigate to ganpati mandals during the festival. Built with Next.js, Supabase, and Leaflet.js.
 
 ## 🚀 Features
 
-- **Interactive Map**: View all Ganapati pandals on an interactive OpenStreetMap
-- **Location-based Search**: Find pandals near your current location
-- **Detailed Information**: View pandal details, timings, contact info, and special features
-- **Navigation**: Get directions to any pandal using Google Maps
-- **Admin Panel**: Password-protected admin interface for adding new pandals
+- **Interactive Map**: View all ganpati mandals on an interactive OpenStreetMap
+- **Location-based Search**: Find mandals near your current location
+- **Detailed Information**: View mandal details, timings, contact info, and special features
+- **Navigation**: Get directions to any mandal using Google Maps
+- **Admin Panel**: Password-protected admin interface for adding new mandals
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Festival Theme**: Beautiful saffron and red themed UI celebrating Ganapati
+- **Festival Theme**: Beautiful saffron and red themed UI celebrating ganpati
 - **Free Database**: Uses Supabase PostgreSQL with generous free tier
 
 ## 🛠 Tech Stack
@@ -32,7 +32,7 @@ A modern navigation app to help devotees find and navigate to Ganapati pandals d
 ### 1. Clone and Install
 ```bash
 git clone <your-repo-url>
-cd MapMyGanapati
+cd MapMyganpati
 npm install
 ```
 
@@ -40,7 +40,7 @@ npm install
 
 **Create Project:**
 1. Go to [supabase.com](https://supabase.com) → "New Project"
-2. Name: `map-my-ganapati`
+2. Name: `mapmyganpati`
 3. Generate strong password
 4. Choose region → "Create project"
 
@@ -53,7 +53,7 @@ npm install
 2. Paste and run this:
 
 ```sql
-CREATE TABLE pandals (
+CREATE TABLE mandals (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
@@ -71,19 +71,19 @@ CREATE TABLE pandals (
 );
 
 -- Add indexes for better performance
-CREATE INDEX idx_pandals_location ON pandals (latitude, longitude);
-CREATE INDEX idx_pandals_name ON pandals (name);
-CREATE INDEX idx_pandals_rating ON pandals (rating DESC);
+CREATE INDEX idx_pandals_location ON mandals (latitude, longitude);
+CREATE INDEX idx_pandals_name ON mandals (name);
+CREATE INDEX idx_pandals_rating ON mandals (rating DESC);
 
 -- Enable Row Level Security
-ALTER TABLE pandals ENABLE ROW LEVEL SECURITY;
+ALTER TABLE mandals ENABLE ROW LEVEL SECURITY;
 
 -- Create policy to allow public read access
-CREATE POLICY "Allow public read access" ON pandals
+CREATE POLICY "Allow public read access" ON mandals
   FOR SELECT USING (true);
 
 -- Create policy to allow public insert (for demo purposes)
-CREATE POLICY "Allow public insert" ON pandals
+CREATE POLICY "Allow public insert" ON mandals
   FOR INSERT WITH CHECK (true);
 ```
 
@@ -104,7 +104,7 @@ cp env.example .env.local
 # Test database connection
 npm run setup-db
 
-# Add sample pandal data
+# Add sample mandal data
 npm run seed
 
 # Start development server
@@ -128,28 +128,28 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=demo-mode
 ### Option 2: Use Debug Panel
 1. Open `http://localhost:3000`
 2. Look for "🐛 Debug Panel" in top-right corner
-3. Click "Test Data Loading" to load 8 Pune pandals
+3. Click "Test Data Loading" to load 8 Pune mandals
 4. Check browser console (F12) for detailed logs
 
 ## 🛡️ Admin Panel
 
 ### Access Information
 - **Admin Panel URL:** `http://localhost:3000/admin`
-- **Default Password:** `ganapati2024`
+- **Default Password:** `ganpati2024`
 
 ### Features
 - **Security**: Password-protected access with session management
 - **Location Capture**: GPS coordinates with current location button
-- **Pandal Management**: Add new pandals with complete information
-- **Real-time Updates**: New pandals appear immediately on main map
+- **mandal Management**: Add new mandals with complete information
+- **Real-time Updates**: New mandals appear immediately on main map
 - **Mobile Support**: Responsive design for mobile devices
 
 ### Usage
 1. Go to `http://localhost:3000/admin`
-2. Enter password: `ganapati2024`
-3. Fill in pandal details and capture location
-4. Click "Add Pandal to Database"
-5. Return to main map to see new pandal
+2. Enter password: `ganpati2024`
+3. Fill in mandal details and capture location
+4. Click "Add mandal to Database"
+5. Return to main map to see new mandal
 
 ### Configuration
 Add to `.env.local` for custom admin password:
@@ -159,18 +159,18 @@ NEXT_PUBLIC_ADMIN_PASSWORD=your_secure_password_here
 
 ## 🗺️ Sample Data
 
-The app includes sample data for famous Ganapati pandals:
+The app includes sample data for famous ganpati mandals:
 
-**Mumbai Pandals:**
-- **Lalbaugcha Raja** - The most famous pandal in Mumbai
-- **Ganesh Galli Mumbaicha Raja** - Historic pandal with traditional celebrations
+**Mumbai mandals:**
+- **Lalbaugcha Raja** - The most famous mandal in Mumbai
+- **Ganesh Galli Mumbaicha Raja** - Historic mandal with traditional celebrations
 - **GSB Seva Mandal King Circle** - Known for creative thematic decorations
-- **Khetwadi Cha Ganraj** - Features one of the tallest Ganapati idols
+- **Khetwadi Cha Ganraj** - Features one of the tallest ganpati idols
 
-**Pune Pandals:**
+**Pune mandals:**
 - **Shri Kasba Ganpati** - First among Pune's Manache Ganpati
-- **Dagdusheth Halwai Ganpati** - Most famous Pune pandal
-- **Tambdi Jogeshwari Ganpati** - Historic pandal
+- **Dagdusheth Halwai Ganpati** - Most famous Pune mandal
+- **Tambdi Jogeshwari Ganpati** - Historic mandal
 - **Tulshibaug Ganpati** - Traditional celebrations
 
 ## 🌐 Deployment (Free Hosting)
@@ -197,11 +197,11 @@ Your app will be live at `https://your-app.vercel.app`
 
 ## 📱 Usage
 
-1. **Allow Location Access**: Click "Find Nearby Pandals" to enable location services
-2. **Explore Pandals**: View pandal markers on the map (🐘 icons)
-3. **Get Details**: Click on any marker to see pandal information
+1. **Allow Location Access**: Click "Find Nearby mandals" to enable location services
+2. **Explore mandals**: View mandal markers on the map (🐘 icons)
+3. **Get Details**: Click on any marker to see mandal information
 4. **Navigate**: Use the "Get Directions" button to open navigation in Google Maps
-5. **Admin Access**: Use `/admin` route to add new pandals
+5. **Admin Access**: Use `/admin` route to add new mandals
 
 ## 🔧 Development
 
@@ -229,7 +229,7 @@ src/
 - `Header.tsx`: App header with location controls
 - `SimpleLocationButton.tsx`: Geolocation functionality
 - `pandalService.ts`: Supabase data operations
-- `CrowdSummary.tsx`: Pandal information display
+- `CrowdSummary.tsx`: mandal information display
 
 ### Data Structure
 ```typescript
@@ -254,7 +254,7 @@ interface PandalLocation {
 ### Available Scripts
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
-- `npm run seed` - Add sample pandal data
+- `npm run seed` - Add sample mandal data
 - `npm run setup-db` - Test database connection
 - `npm run fetch-google` - Fetch data from Google Places API
 
@@ -277,7 +277,7 @@ interface PandalLocation {
 - Use `npm run setup-db` to test connection
 
 **Admin panel issues:**
-- Default password is `ganapati2024`
+- Default password is `ganpati2024`
 - Check if custom password is set in environment
 - Clear browser cache and try again
 
@@ -295,9 +295,9 @@ interface PandalLocation {
 
 ### Demo Mode Testing
 If using demo mode, you should see:
-- 8 Pune Ganapati Pandals loaded
+- 8 Pune ganpati mandals loaded
 - Map centered on Pune (18.52, 73.86)
-- Orange elephant markers (🐘) for each pandal
+- Orange elephant markers (🐘) for each mandal
 - Console messages starting with `📝 Using fallback data`
 
 ## 🔐 Security
@@ -336,10 +336,10 @@ This project is open source and available under the [MIT License](LICENSE).
 - Leaflet.js for mapping functionality
 - Supabase for backend services
 - Vercel for hosting
-- All the Ganapati mandals and devotees who make this festival special
+- All the ganpati mandals and devotees who make this festival special
 
 ---
 
 **Ganpati Bappa Morya! 🙏**
 
-Built with ❤️ for the Ganapati festival community.
+Built with ❤️ for the ganpati festival community.

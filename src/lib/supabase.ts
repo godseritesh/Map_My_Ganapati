@@ -18,7 +18,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 
 // Database table names
 export const TABLES = {
-  PANDALS: 'pandals',
+  mandals: 'mandals',
 } as const
 
 export default supabase

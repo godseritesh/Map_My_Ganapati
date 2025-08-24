@@ -1,6 +1,6 @@
 /**
  * Database setup script for Supabase
- * Creates the pandals table with proper schema
+ * Creates the mandals table with proper schema
  */
 
 import { supabase } from '../src/lib/supabase'
@@ -12,16 +12,16 @@ async function setupDatabase() {
     // Note: In production, you should run these SQL commands in Supabase dashboard
     // This script assumes the table is already created
     
-    // Check if pandals table exists by trying to query it
+    // Check if mandals table exists by trying to query it
     const { data, error } = await supabase
-      .from('pandals')
+      .from('mandals')
       .select('count')
       .limit(1)
     
     if (error) {
       console.log('📋 Table does not exist. Please create it in Supabase dashboard with this SQL:')
       console.log(`
-CREATE TABLE pandals (
+CREATE TABLE mandals (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
@@ -39,19 +39,19 @@ CREATE TABLE pandals (
 );
 
 -- Add indexes for better performance
-CREATE INDEX idx_pandals_location ON pandals (latitude, longitude);
-CREATE INDEX idx_pandals_name ON pandals (name);
-CREATE INDEX idx_pandals_rating ON pandals (rating DESC);
+CREATE INDEX idx_pandals_location ON mandals (latitude, longitude);
+CREATE INDEX idx_pandals_name ON mandals (name);
+CREATE INDEX idx_pandals_rating ON mandals (rating DESC);
 
 -- Enable Row Level Security (optional)
-ALTER TABLE pandals ENABLE ROW LEVEL SECURITY;
+ALTER TABLE mandals ENABLE ROW LEVEL SECURITY;
 
 -- Create policy to allow public read access
-CREATE POLICY "Allow public read access" ON pandals
+CREATE POLICY "Allow public read access" ON mandals
   FOR SELECT USING (true);
 
 -- Create policy to allow public insert (for demo purposes - restrict in production)
-CREATE POLICY "Allow public insert" ON pandals
+CREATE POLICY "Allow public insert" ON mandals
   FOR INSERT WITH CHECK (true);
       `)
       return

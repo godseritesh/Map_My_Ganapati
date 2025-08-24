@@ -1,18 +1,18 @@
 'use client'
 
-import { PandalLocation } from '@/types/pandal'
+import { PandalLocation } from '@/types/mandal'
 import { CrowdService } from '@/lib/crowdService'
 import { Users, Clock, TrendingUp, TrendingDown } from 'lucide-react'
 
 interface CrowdSummaryProps {
-  pandals: PandalLocation[]
+  mandals: PandalLocation[]
 }
 
-export default function CrowdSummary({ pandals }: CrowdSummaryProps) {
-  if (pandals.length === 0) return null
+export default function CrowdSummary({ mandals }: CrowdSummaryProps) {
+  if (mandals.length === 0) return null
 
   // Calculate summary statistics
-  const pandalsWithCrowd = pandals.filter(p => p.crowd_data)
+  const pandalsWithCrowd = mandals.filter(p => p.crowd_data)
   const totalPeople = pandalsWithCrowd.reduce((sum, p) => sum + (p.crowd_data?.estimated_people_count || 0), 0)
   const avgWaitTime = Math.round(pandalsWithCrowd.reduce((sum, p) => sum + (p.crowd_data?.darshan_wait_time || 0), 0) / pandalsWithCrowd.length)
   
@@ -103,19 +103,19 @@ export default function CrowdSummary({ pandals }: CrowdSummaryProps) {
             Best Options Right Now:
           </h4>
           <div className="space-y-1 sm:space-y-2">
-            {bestOptions.map((pandal, index) => (
-              <div key={pandal.id} className="flex items-center justify-between p-1.5 sm:p-2 bg-green-50 rounded-lg border border-green-200">
+            {bestOptions.map((mandal, index) => (
+              <div key={mandal.id} className="flex items-center justify-between p-1.5 sm:p-2 bg-green-50 rounded-lg border border-green-200">
                 <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="text-sm sm:text-lg">{CrowdService.getCrowdLevelEmoji(pandal.crowd_data!.current_crowd_level)}</span>
+                  <span className="text-sm sm:text-lg">{CrowdService.getCrowdLevelEmoji(mandal.crowd_data!.current_crowd_level)}</span>
                   <div>
-                    <div className="font-medium text-xs sm:text-sm text-gray-800 leading-tight">{pandal.name}</div>
+                    <div className="font-medium text-xs sm:text-sm text-gray-800 leading-tight">{mandal.name}</div>
                     <div className="text-xs text-gray-600">
-                      {CrowdService.getCrowdLevelText(pandal.crowd_data!.current_crowd_level)}
+                      {CrowdService.getCrowdLevelText(mandal.crowd_data!.current_crowd_level)}
                     </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-sm sm:text-base text-green-600">{pandal.crowd_data!.darshan_wait_time}m</div>
+                  <div className="font-bold text-sm sm:text-base text-green-600">{mandal.crowd_data!.darshan_wait_time}m</div>
                   <div className="text-xs text-gray-500">wait</div>
                 </div>
               </div>

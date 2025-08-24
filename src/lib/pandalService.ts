@@ -1,9 +1,9 @@
 import { supabase } from './supabase'
-import { PandalLocation } from '@/types/pandal'
+import { PandalLocation } from '@/types/mandal'
 import { CrowdService } from './crowdService'
 
 export class PandalService {
-  // Get all pandals
+  // Get all mandals
   static async getAllPandals(): Promise<PandalLocation[]> {
     try {
       // Check if we have valid Supabase configuration
@@ -16,7 +16,7 @@ export class PandalService {
       }
 
       const { data, error } = await supabase
-        .from('pandals')
+        .from('mandals')
         .select('*')
         .order('name')
       
@@ -25,9 +25,9 @@ export class PandalService {
         return this.getFallbackData()
       }
       
-      const pandalsWithCrowd = (data || this.getFallbackData()).map(pandal => ({
-        ...pandal,
-        crowd_data: CrowdService.generateCrowdData(pandal)
+      const pandalsWithCrowd = (data || this.getFallbackData()).map(mandal => ({
+        ...mandal,
+        crowd_data: CrowdService.generateCrowdData(mandal)
       }))
       return pandalsWithCrowd
     } catch (error) {
@@ -36,7 +36,7 @@ export class PandalService {
     }
   }
 
-  // Get pandals near a location (within radius in km)
+  // Get mandals near a location (within radius in km)
   static async getNearbyPandals(
     latitude: number, 
     longitude: number, 
@@ -47,15 +47,15 @@ export class PandalService {
       // For now, using client-side filtering as fallback
       const allPandals = await this.getAllPandals()
       
-      return allPandals.filter(pandal => {
+      return allPandals.filter(mandal => {
         const distance = this.calculateDistance(
           latitude, longitude, 
-          pandal.latitude, pandal.longitude
+          mandal.latitude, mandal.longitude
         )
         return distance <= radiusKm
       })
     } catch (error) {
-      console.error('Error fetching nearby pandals:', error)
+      console.error('Error fetching nearby mandals:', error)
       return this.getFallbackData()
     }
   }
@@ -83,13 +83,13 @@ export class PandalService {
     return deg * (Math.PI/180)
   }
 
-  // Add a new pandal
-  static async addPandal(pandal: Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+  // Add a new mandal
+  static async addPandal(mandal: Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
     try {
       const { data, error } = await supabase
-        .from('pandals')
+        .from('mandals')
         .insert([{
-          ...pandal,
+          ...mandal,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }])
@@ -99,7 +99,7 @@ export class PandalService {
       if (error) throw error
       return data.id
     } catch (error) {
-      console.error('Error adding pandal:', error)
+      console.error('Error adding mandal:', error)
       throw error
     }
   }
@@ -107,9 +107,9 @@ export class PandalService {
   // Get fallback data when database is not available
   static getFallbackData(): PandalLocation[] {
     const sampleData = this.getSamplePandals()
-    return sampleData.map((pandal, index) => {
+    return sampleData.map((mandal, index) => {
       const pandalWithMeta = {
-        ...pandal,
+        ...mandal,
         id: `fallback-${index}`,
         created_at: new Date(),
         updated_at: new Date()
@@ -121,12 +121,12 @@ export class PandalService {
     })
   }
 
-  // Get sample data for development and fallback - Real Pune Ganapati Pandals
+  // Get sample data for development and fallback - Real Pune ganpati mandals
   static getSamplePandals(): Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>[] {
     return [
       {
         name: "Shri Kasba Ganpati",
-        description: "The first and most revered Ganapati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
+        description: "The first and most revered ganpati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
         address: "159, Kasba Peth Road, Kasba Peth, Pune, Maharashtra 411002",
         latitude: 18.5158,
         longitude: 73.8567,

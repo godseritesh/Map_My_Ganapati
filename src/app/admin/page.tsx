@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Shield, MapPin, Clock, Star, Phone, Camera, Save, ArrowLeft, Eye, EyeOff } from 'lucide-react'
 import { PandalService } from '@/lib/pandalService'
-import { UserLocation } from '@/types/pandal'
+import { UserLocation } from '@/types/mandal'
 import SimpleLocationButton from '@/components/SimpleLocationButton'
 import Link from 'next/link'
 
@@ -42,7 +42,7 @@ export default function AdminPage() {
   })
 
   // Admin password (configurable via environment variable)
-  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'ganapati2024'
+  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'ganpati2024'
 
   useEffect(() => {
     // Check if already authenticated
@@ -111,9 +111,9 @@ export default function AdminPage() {
         rating: formData.rating
       })
 
-      setSuccessMessage(`Pandal "${formData.name}" added successfully! ID: ${newPandalId}`)
+      setSuccessMessage(`mandal "${formData.name}" added successfully! ID: ${newPandalId}`)
       
-      // Add to recent pandals list
+      // Add to recent mandals list
       setRecentPandals(prev => [{
         id: newPandalId,
         name: formData.name,
@@ -135,8 +135,8 @@ export default function AdminPage() {
       setCurrentLocation(null)
 
     } catch (error) {
-      console.error('Error adding pandal:', error)
-      setAuthError(error instanceof Error ? error.message : 'Failed to add pandal')
+      console.error('Error adding mandal:', error)
+      setAuthError(error instanceof Error ? error.message : 'Failed to add mandal')
     } finally {
       setLoading(false)
     }
@@ -158,7 +158,7 @@ export default function AdminPage() {
               <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" />
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800">Admin Panel</h1>
-            <p className="text-gray-600 mt-2 text-sm sm:text-base">Enter password to manage pandals</p>
+            <p className="text-gray-600 mt-2 text-sm sm:text-base">Enter password to manage mandals</p>
           </div>
 
           <form onSubmit={handleAuth} className="space-y-4 sm:space-y-6">
@@ -229,7 +229,7 @@ export default function AdminPage() {
               </div>
               <div>
                 <h1 className="text-xl font-bold">Admin Panel</h1>
-                <p className="text-orange-100 text-sm">Add New Pandals</p>
+                <p className="text-orange-100 text-sm">Add New mandals</p>
               </div>
             </div>
             
@@ -261,26 +261,26 @@ export default function AdminPage() {
             </div>
           )}
 
-          {/* Recent Pandals */}
+          {/* Recent mandals */}
           {recentPandals.length > 0 && (
             <div className="mb-4 sm:mb-6 bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4">
-              <h3 className="font-semibold text-blue-800 mb-2 sm:mb-3 text-sm sm:text-base">Recently Added Pandals</h3>
+              <h3 className="font-semibold text-blue-800 mb-2 sm:mb-3 text-sm sm:text-base">Recently Added mandals</h3>
               <div className="space-y-2">
-                {recentPandals.map((pandal, index) => (
-                  <div key={pandal.id} className="flex justify-between items-center text-xs sm:text-sm">
-                    <span className="text-blue-700 font-medium truncate mr-2">{pandal.name}</span>
-                    <span className="text-blue-600 flex-shrink-0">{pandal.addedAt}</span>
+                {recentPandals.map((mandal, index) => (
+                  <div key={mandal.id} className="flex justify-between items-center text-xs sm:text-sm">
+                    <span className="text-blue-700 font-medium truncate mr-2">{mandal.name}</span>
+                    <span className="text-blue-600 flex-shrink-0">{mandal.addedAt}</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Add Pandal Form */}
+          {/* Add mandal Form */}
           <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
               <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
-              Add New Pandal
+              Add New mandal
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
@@ -288,7 +288,7 @@ export default function AdminPage() {
               <div className="grid grid-cols-1 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Pandal Name *
+                    mandal Name *
                   </label>
                   <input
                     type="text"
@@ -298,7 +298,7 @@ export default function AdminPage() {
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm sm:text-base"
                     placeholder="e.g., Shree Ganesh Mandal"
                     required
-                    aria-label="Pandal name"
+                    aria-label="mandal name"
                   />
                 </div>
 
@@ -312,9 +312,9 @@ export default function AdminPage() {
                     onChange={handleInputChange}
                     rows={3}
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm sm:text-base resize-none"
-                    placeholder="Brief description of the pandal and its special features..."
+                    placeholder="Brief description of the mandal and its special features..."
                     required
-                    aria-label="Pandal description"
+                    aria-label="mandal description"
                   />
                 </div>
               </div>
@@ -398,7 +398,7 @@ export default function AdminPage() {
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm sm:text-base"
                     placeholder="e.g., 6:00 AM - 11:00 PM"
                     required
-                    aria-label="Pandal timings"
+                    aria-label="mandal timings"
                   />
                 </div>
               </div>
@@ -420,7 +420,7 @@ export default function AdminPage() {
                     step="0.1"
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm sm:text-base"
                     placeholder="4.5"
-                    aria-label="Pandal rating"
+                    aria-label="mandal rating"
                   />
                 </div>
 
@@ -446,19 +446,19 @@ export default function AdminPage() {
                   type="submit"
                   disabled={loading || !currentLocation}
                   className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white py-3 sm:py-4 rounded-xl transition-all duration-300 font-medium flex items-center justify-center gap-1 sm:gap-2 text-sm sm:text-base"
-                  aria-label="Add pandal to database"
+                  aria-label="Add mandal to database"
                 >
                   {loading ? (
                     <>
                       <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white"></div>
-                      <span className="hidden sm:inline">Adding Pandal...</span>
+                      <span className="hidden sm:inline">Adding mandal...</span>
                       <span className="sm:hidden">Adding...</span>
                     </>
                   ) : (
                     <>
                       <Save className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span className="hidden sm:inline">Add Pandal to Database</span>
-                      <span className="sm:hidden">Add Pandal</span>
+                      <span className="hidden sm:inline">Add mandal to Database</span>
+                      <span className="sm:hidden">Add mandal</span>
                     </>
                   )}
                 </button>

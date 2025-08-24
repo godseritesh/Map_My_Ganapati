@@ -1,5 +1,5 @@
 /**
- * Script to fetch real pandal data from Google Maps and update the database
+ * Script to fetch real mandal data from Google Maps and update the database
  * Run with: npx ts-node scripts/fetchGoogleData.ts
  */
 
@@ -7,7 +7,7 @@ import { GooglePlacesService } from '../src/lib/googlePlacesService'
 import { supabase } from '../src/lib/supabase'
 
 async function fetchAndUpdatePandalData() {
-  console.log('🔍 Fetching real pandal data from Google Maps...')
+  console.log('🔍 Fetching real mandal data from Google Maps...')
   
   try {
     // Check if Google Maps API key is available
@@ -22,7 +22,7 @@ async function fetchAndUpdatePandalData() {
     }
 
     // Search for famous Pune mandals on Google Maps
-    console.log('📍 Searching for famous Pune Ganapati mandals...')
+    console.log('📍 Searching for famous Pune ganpati mandals...')
     const googleResults = await GooglePlacesService.searchFamousPuneMandals()
     
     if (googleResults.length === 0) {
@@ -34,13 +34,13 @@ async function fetchAndUpdatePandalData() {
 
     // Check if we can access the database
     const { data: existingData, error: checkError } = await supabase
-      .from('pandals')
+      .from('mandals')
       .select('id')
       .limit(1)
     
     if (checkError) {
       console.log('⚠️  Cannot access Supabase database. Using Google data for display only.')
-      console.log('🗺️  Found pandals from Google Maps:')
+      console.log('🗺️  Found mandals from Google Maps:')
       
       googleResults.forEach((result, index) => {
         if (result.googleData) {
@@ -71,17 +71,17 @@ async function fetchAndUpdatePandalData() {
         }
       )
 
-      // Check if this pandal already exists
+      // Check if this mandal already exists
       const { data: existing } = await supabase
-        .from('pandals')
+        .from('mandals')
         .select('id')
         .eq('name', pandalData.name)
         .single()
 
       if (existing) {
-        // Update existing pandal
+        // Update existing mandal
         const { error } = await supabase
-          .from('pandals')
+          .from('mandals')
           .update({
             address: pandalData.address,
             latitude: pandalData.latitude,
@@ -97,9 +97,9 @@ async function fetchAndUpdatePandalData() {
           updatedCount++
         }
       } else {
-        // Insert new pandal
+        // Insert new mandal
         const { error } = await supabase
-          .from('pandals')
+          .from('mandals')
           .insert([{
             ...pandalData,
             created_at: new Date().toISOString(),
@@ -113,7 +113,7 @@ async function fetchAndUpdatePandalData() {
       }
     }
 
-    console.log(`🎉 Successfully updated ${updatedCount} pandals with Google Maps data!`)
+    console.log(`🎉 Successfully updated ${updatedCount} mandals with Google Maps data!`)
     console.log('📱 Your app now has real-time location data from Google Maps!')
 
   } catch (error) {
@@ -128,7 +128,7 @@ async function fetchAndUpdatePandalData() {
 // Helper functions to provide additional context for known mandals
 function getDescriptionForMandal(name: string): string {
   const descriptions: { [key: string]: string } = {
-    'Shri Kasba Ganpati': "The first and most revered Ganapati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
+    'Shri Kasba Ganpati': "The first and most revered ganpati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
     'Tambdi Jogeshwari Ganpati': "Known as the protector of Pune, established in 1893. Associated with the Tambdi Jogeshwari Temple dedicated to Goddess Durga.",
     'Dagdusheth Halwai Ganpati Temple': "One of the most famous Ganpati mandals in Pune, attracting thousands of devotees daily. Known for its rich history and grandeur.",
     'Tulshibaug Ganpati': "Features one of the largest Ganpati idols in Pune. Established in 1901 with magnificent decorations.",
@@ -140,7 +140,7 @@ function getDescriptionForMandal(name: string): string {
     if (name.includes(key)) return desc
   }
   
-  return `Famous Ganapati mandal in Pune with rich cultural heritage.`
+  return `Famous ganpati mandal in Pune with rich cultural heritage.`
 }
 
 function getTimingsForMandal(name: string): string {

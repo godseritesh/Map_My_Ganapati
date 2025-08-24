@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { PandalLocation, UserLocation } from '@/types/pandal'
+import { PandalLocation, UserLocation } from '@/types/mandal'
 import Header from '@/components/Header'
 
 import CrowdSummary from '@/components/CrowdSummary'
@@ -27,7 +27,7 @@ export default function HomePage() {
   const [userLocation, setUserLocation] = useState<UserLocation | undefined>()
   const [selectedPandal, setSelectedPandal] = useState<PandalLocation | null>(null)
   const [pandalCount, setPandalCount] = useState<number>(0)
-  const [pandals, setPandals] = useState<PandalLocation[]>([])
+  const [mandals, setPandals] = useState<PandalLocation[]>([])
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false)
   const [showCrowdOverview, setShowCrowdOverview] = useState<boolean>(false)
 
@@ -38,9 +38,9 @@ export default function HomePage() {
     console.log('✅ User location state updated successfully')
   }
 
-  const handlePandalSelect = (pandal: PandalLocation) => {
-    setSelectedPandal(pandal)
-    setShowSuggestions(false) // Close suggestions when selecting a pandal
+  const handlePandalSelect = (mandal: PandalLocation) => {
+    setSelectedPandal(mandal)
+    setShowSuggestions(false) // Close suggestions when selecting a mandal
   }
 
   const handlePandalCountUpdate = (count: number) => {
@@ -65,12 +65,12 @@ export default function HomePage() {
     }
   }, [userLocation])
 
-  const handleGetDirections = (pandal: PandalLocation) => {
+  const handleGetDirections = (mandal: PandalLocation) => {
     if (userLocation) {
-      const url = `https://www.google.com/maps/dir/${userLocation.latitude},${userLocation.longitude}/${pandal.latitude},${pandal.longitude}`
+      const url = `https://www.google.com/maps/dir/${userLocation.latitude},${userLocation.longitude}/${mandal.latitude},${mandal.longitude}`
       window.open(url, '_blank')
     } else {
-      const url = `https://www.google.com/maps/search/?api=1&query=${pandal.latitude},${pandal.longitude}`
+      const url = `https://www.google.com/maps/search/?api=1&query=${mandal.latitude},${mandal.longitude}`
       window.open(url, '_blank')
     }
   }
@@ -91,7 +91,7 @@ export default function HomePage() {
         />
 
         {/* Action Buttons */}
-        {!selectedPandal && !showSuggestions && pandals.length > 0 && (
+        {!selectedPandal && !showSuggestions && mandals.length > 0 && (
           <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-10 flex flex-col gap-2">
             <button
               onClick={() => setShowSuggestions(true)}
@@ -120,7 +120,7 @@ export default function HomePage() {
         {showSuggestions && !selectedPandal && (
           <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-auto z-10 max-w-full sm:max-w-md">
             <SuggestionPanel 
-              pandals={pandals}
+              mandals={mandals}
               userLocation={userLocation}
               onPandalSelect={handlePandalSelect}
               onClose={() => setShowSuggestions(false)}
@@ -129,11 +129,11 @@ export default function HomePage() {
         )}
 
         {/* Crowd Summary Panel - Always visible on desktop, toggleable on mobile */}
-        {!selectedPandal && !showSuggestions && pandals.length > 0 && (
+        {!selectedPandal && !showSuggestions && mandals.length > 0 && (
           <>
             {/* Desktop version - always visible */}
             <div className="hidden lg:block absolute top-2 sm:top-4 right-2 sm:right-4 max-w-xs sm:max-w-sm w-full z-10">
-              <CrowdSummary pandals={pandals} />
+              <CrowdSummary mandals={mandals} />
             </div>
             
             {/* Mobile/Tablet version - toggleable sidebar */}
@@ -161,7 +161,7 @@ export default function HomePage() {
                     </button>
                   </div>
                   <div className="p-4">
-                    <CrowdSummary pandals={pandals} />
+                    <CrowdSummary mandals={mandals} />
                   </div>
                 </div>
               </div>
@@ -169,7 +169,7 @@ export default function HomePage() {
           </>
         )}
 
-        {/* Selected Pandal Details Panel */}
+        {/* Selected mandal Details Panel */}
         {selectedPandal && (
           <div className="absolute top-2 sm:top-4 right-2 sm:right-4 left-2 sm:left-auto bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-3 sm:p-4 lg:p-6 max-w-full sm:max-w-sm w-full max-h-[calc(100vh-5rem)] sm:max-h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-8rem)] overflow-y-auto z-10 border border-white/20">
             <div className="flex justify-between items-start mb-2 sm:mb-3 lg:mb-4">
@@ -179,7 +179,7 @@ export default function HomePage() {
               <button
                 onClick={() => setSelectedPandal(null)}
                 className="text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full p-1.5 sm:p-2 transition-colors flex-shrink-0"
-                aria-label="Close pandal details"
+                aria-label="Close mandal details"
               >
                 <X className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
@@ -334,9 +334,9 @@ export default function HomePage() {
           <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 bg-white/95 backdrop-blur-md rounded-xl p-2 sm:p-3 lg:p-4 text-xs text-gray-600 max-w-xs shadow-lg border border-white/20">
             <div className="flex items-center gap-1 sm:gap-2 mb-2">
               <span className="text-base sm:text-lg">🚀</span>
-              <p className="font-bold text-orange-700 text-xs sm:text-sm">Ganapati Navigator</p>
+              <p className="font-bold text-orange-700 text-xs sm:text-sm">ganpati Navigator</p>
             </div>
-            <p className="mb-2 leading-relaxed text-xs">Find and navigate to Ganapati pandals near you. Click on markers for details and directions.</p>
+            <p className="mb-2 leading-relaxed text-xs">Find and navigate to ganpati mandals near you. Click on markers for details and directions.</p>
             
             {/* Location Status Indicator */}
             <div className="mb-2 p-2 rounded-lg border">
@@ -362,7 +362,7 @@ export default function HomePage() {
               <div className="flex items-center gap-2 mt-2 sm:mt-3 p-2 bg-orange-50 rounded-lg">
                 <span className="text-orange-600 text-sm">📍</span>
                 <span className="text-orange-800 font-medium text-xs">
-                  {pandalCount} pandal{pandalCount !== 1 ? 's' : ''} {userLocation ? 'nearby' : 'available'}
+                  {pandalCount} mandal{pandalCount !== 1 ? 's' : ''} {userLocation ? 'nearby' : 'available'}
                 </span>
               </div>
             )}

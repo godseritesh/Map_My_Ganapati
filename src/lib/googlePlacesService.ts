@@ -1,6 +1,6 @@
 /**
- * Google Places API service for fetching real-time pandal data
- * This service can be used to get current information about pandals from Google Maps
+ * Google Places API service for fetching real-time mandal data
+ * This service can be used to get current information about mandals from Google Maps
  */
 
 export interface GooglePlaceResult {
@@ -94,9 +94,9 @@ export class GooglePlacesService {
   }
 
   /**
-   * Search for Ganapati temples/mandals near a location
+   * Search for ganpati temples/mandals near a location
    */
-  static async searchNearbyGanapatiMandals(
+  static async searchNearbyganpatiMandals(
     latitude: number, 
     longitude: number, 
     radius: number = 5000
@@ -111,7 +111,7 @@ export class GooglePlacesService {
         `${this.BASE_URL}/nearbysearch/json?` +
         `location=${latitude},${longitude}&` +
         `radius=${radius}&` +
-        `keyword=ganapati ganesh temple mandal&` +
+        `keyword=ganpati ganesh temple mandal&` +
         `type=hindu_temple&` +
         `key=${this.API_KEY}`
       )
@@ -144,7 +144,7 @@ export class GooglePlacesService {
   }
 
   /**
-   * Batch search for multiple famous Pune Ganapati mandals
+   * Batch search for multiple famous Pune ganpati mandals
    */
   static async searchFamousPuneMandals(): Promise<Array<{
     name: string
@@ -183,7 +183,7 @@ export class GooglePlacesService {
   ) {
     return {
       name: googlePlace.name,
-      description: additionalInfo?.description || `Famous Ganapati mandal in Pune`,
+      description: additionalInfo?.description || `Famous ganpati mandal in Pune`,
       address: googlePlace.formatted_address,
       latitude: googlePlace.geometry.location.lat,
       longitude: googlePlace.geometry.location.lng,

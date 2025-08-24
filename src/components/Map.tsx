@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import { Icon, divIcon } from 'leaflet'
-import { PandalLocation, UserLocation } from '@/types/pandal'
+import { PandalLocation, UserLocation } from '@/types/mandal'
 import { PandalService } from '@/lib/pandalService'
 import { CrowdService } from '@/lib/crowdService'
 import { Navigation, Clock, Star, Phone, MapPin, Users, Timer } from 'lucide-react'
@@ -18,9 +18,9 @@ Icon.Default.mergeOptions({
 
 interface MapProps {
   userLocation?: UserLocation
-  onPandalSelect: (pandal: PandalLocation) => void
+  onPandalSelect: (mandal: PandalLocation) => void
   onPandalCountUpdate?: (count: number) => void
-  onPandalsUpdate?: (pandals: PandalLocation[]) => void
+  onPandalsUpdate?: (mandals: PandalLocation[]) => void
 }
 
 // Component to handle map center changes
@@ -33,7 +33,7 @@ function ChangeView({ center }: { center: [number, number] }) {
 }
 
 export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate, onPandalsUpdate }: MapProps) {
-  const [pandals, setPandals] = useState<PandalLocation[]>([])
+  const [mandals, setPandals] = useState<PandalLocation[]>([])
   const [loading, setLoading] = useState(true)
 
   // Default to Pune coordinates (centered on historic Peth areas)
@@ -47,7 +47,7 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
       setLoading(true)
       try {
         if (userLocation) {
-          console.log('🗺️ Map component received user location, searching for nearby pandals...')
+          console.log('🗺️ Map component received user location, searching for nearby mandals...')
           console.log('📍 User coordinates:', userLocation)
           console.log('📊 Location details:', {
             lat: userLocation.latitude,
@@ -55,17 +55,17 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
             accuracy: userLocation.accuracy
           })
           
-          // Get nearby pandals using the service
+          // Get nearby mandals using the service
           const nearbyPandals = await PandalService.getNearbyPandals(
             userLocation.latitude, 
             userLocation.longitude, 
             25 // 25km radius
           )
           
-          console.log('📊 Found', nearbyPandals.length, 'pandals within 25km')
+          console.log('📊 Found', nearbyPandals.length, 'mandals within 25km')
           
           if (nearbyPandals.length === 0) {
-            console.log('⚠️ No pandals found within 25km, trying 100km...')
+            console.log('⚠️ No mandals found within 25km, trying 100km...')
             const expandedPandals = await PandalService.getNearbyPandals(
               userLocation.latitude, 
               userLocation.longitude, 
@@ -73,32 +73,32 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
             )
             
             if (expandedPandals.length > 0) {
-              console.log('✅ Found', expandedPandals.length, 'pandals within 100km')
+              console.log('✅ Found', expandedPandals.length, 'mandals within 100km')
               setPandals(expandedPandals)
               onPandalCountUpdate?.(expandedPandals.length)
               onPandalsUpdate?.(expandedPandals)
             } else {
-              console.log('❌ No pandals found, showing all pandals')
+              console.log('❌ No mandals found, showing all mandals')
               const allPandals = await PandalService.getAllPandals()
               setPandals(allPandals)
               onPandalCountUpdate?.(allPandals.length)
               onPandalsUpdate?.(allPandals)
             }
           } else {
-            console.log('✅ Found nearby pandals:', nearbyPandals.map(p => p.name))
+            console.log('✅ Found nearby mandals:', nearbyPandals.map(p => p.name))
             setPandals(nearbyPandals)
             onPandalCountUpdate?.(nearbyPandals.length)
             onPandalsUpdate?.(nearbyPandals)
           }
         } else {
-          // Get all pandals if no user location
+          // Get all mandals if no user location
           const allPandals = await PandalService.getAllPandals()
           setPandals(allPandals)
           onPandalCountUpdate?.(allPandals.length)
           onPandalsUpdate?.(allPandals)
         }
       } catch (error) {
-        console.error('Error loading pandals:', error)
+        console.error('Error loading mandals:', error)
         // Service already handles fallback data
         setPandals([])
       } finally {
@@ -111,9 +111,9 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
     // Set up real-time updates every 30 seconds to simulate live crowd data
     const updateInterval = setInterval(() => {
       setPandals(currentPandals => {
-        const updatedPandals = currentPandals.map(pandal => ({
-          ...pandal,
-          crowd_data: CrowdService.generateCrowdData(pandal)
+        const updatedPandals = currentPandals.map(mandal => ({
+          ...mandal,
+          crowd_data: CrowdService.generateCrowdData(mandal)
         }))
         onPandalsUpdate?.(updatedPandals)
         return updatedPandals
@@ -123,16 +123,16 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
     return () => clearInterval(updateInterval)
   }, [userLocation])
 
-  // Update pandal count when pandals change
+  // Update mandal count when mandals change
   useEffect(() => {
     if (onPandalCountUpdate) {
-      onPandalCountUpdate(pandals.length)
+      onPandalCountUpdate(mandals.length)
     }
-  }, [pandals, onPandalCountUpdate])
+  }, [mandals, onPandalCountUpdate])
 
-  // Custom icon for Ganapati pandals with crowd indicator - responsive sizing
-  const createPandalIcon = (pandal: PandalLocation) => {
-    const crowdLevel = pandal.crowd_data?.current_crowd_level || 'low'
+  // Custom icon for ganpati mandals with crowd indicator - responsive sizing
+  const createPandalIcon = (mandal: PandalLocation) => {
+    const crowdLevel = mandal.crowd_data?.current_crowd_level || 'low'
     const crowdEmoji = CrowdService.getCrowdLevelEmoji(crowdLevel)
     
     let borderColor = '#059669' // emerald green for low
@@ -159,7 +159,7 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
     const crowdFontSize = isMobile ? 8 : 10
     
     return divIcon({
-      className: 'pandal-marker',
+      className: 'mandal-marker',
       html: `
         <div style="
           background: linear-gradient(135deg, #FF6B35, #F7931E, #FFD23F); 
@@ -175,7 +175,7 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
           position: relative;
           animation: pulse 2s infinite;
         ">
-          <img src="/markers/img1.png" alt="Ganapati" style="width: ${fontSize + 4}px; height: ${fontSize + 4}px; object-fit: contain;" />
+          <img src="/markers/img1.png" alt="ganpati" style="width: ${fontSize + 4}px; height: ${fontSize + 4}px; object-fit: contain;" />
           <div style="
             position: absolute;
             top: ${isMobile ? -3 : -4}px;
@@ -250,14 +250,14 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
     })
   }
 
-  const handleGetDirections = (pandal: PandalLocation) => {
+  const handleGetDirections = (mandal: PandalLocation) => {
     if (userLocation) {
       // Open in Google Maps
-      const url = `https://www.google.com/maps/dir/${userLocation.latitude},${userLocation.longitude}/${pandal.latitude},${pandal.longitude}`
+      const url = `https://www.google.com/maps/dir/${userLocation.latitude},${userLocation.longitude}/${mandal.latitude},${mandal.longitude}`
       window.open(url, '_blank')
     } else {
-      // Just open the pandal location
-      const url = `https://www.google.com/maps/search/?api=1&query=${pandal.latitude},${pandal.longitude}`
+      // Just open the mandal location
+      const url = `https://www.google.com/maps/search/?api=1&query=${mandal.latitude},${mandal.longitude}`
       window.open(url, '_blank')
     }
   }
@@ -269,11 +269,11 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
           <div className="relative">
             <div className="animate-spin rounded-full h-16 w-16 border-4 border-orange-200 border-t-orange-600 mx-auto"></div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <img src="/markers/img1.png" alt="Ganapati" className="w-12 h-12 animate-pulse object-contain" />
+              <img src="/markers/img1.png" alt="ganpati" className="w-12 h-12 animate-pulse object-contain" />
             </div>
           </div>
-          <p className="mt-6 text-gray-700 font-medium">Loading Ganapati Pandals...</p>
-          <p className="mt-2 text-sm text-gray-500">Finding the best pandals near you</p>
+          <p className="mt-6 text-gray-700 font-medium">Loading ganpati mandals...</p>
+          <p className="mt-2 text-sm text-gray-500">Finding the best mandals near you</p>
         </div>
       </div>
     )
@@ -310,54 +310,54 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
         </Marker>
       )}
 
-      {/* Pandal markers */}
-      {pandals.map((pandal) => (
+      {/* mandal markers */}
+      {mandals.map((mandal) => (
         <Marker
-          key={pandal.id}
-          position={[pandal.latitude, pandal.longitude]}
-          icon={createPandalIcon(pandal)}
+          key={mandal.id}
+          position={[mandal.latitude, mandal.longitude]}
+          icon={createPandalIcon(mandal)}
         >
-          <Popup maxWidth={window.innerWidth < 768 ? 280 : 320} className="pandal-popup">
+          <Popup maxWidth={window.innerWidth < 768 ? 280 : 320} className="mandal-popup">
             <div className="p-2 sm:p-3">
               <h3 className="font-bold text-base sm:text-lg text-orange-700 mb-2 leading-tight">
-                {pandal.name}
+                {mandal.name}
               </h3>
               
               <p className="text-xs sm:text-sm text-gray-600 mb-3 leading-relaxed">
-                {pandal.description}
+                {mandal.description}
               </p>
 
               <div className="space-y-2 mb-3">
                 <div className="flex items-start gap-2">
                   <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-xs text-gray-600 leading-relaxed">{pandal.address}</span>
+                  <span className="text-xs text-gray-600 leading-relaxed">{mandal.address}</span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 flex-shrink-0" />
-                  <span className="text-xs text-gray-600">{pandal.timings}</span>
+                  <span className="text-xs text-gray-600">{mandal.timings}</span>
                 </div>
 
-                {pandal.rating && (
+                {mandal.rating && (
                   <div className="flex items-center gap-2">
                     <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-500 flex-shrink-0" />
-                    <span className="text-xs text-gray-600">{pandal.rating}/5</span>
+                    <span className="text-xs text-gray-600">{mandal.rating}/5</span>
                   </div>
                 )}
 
-                {pandal.contact && (
+                {mandal.contact && (
                   <div className="flex items-center gap-2">
                     <Phone className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 flex-shrink-0" />
-                    <span className="text-xs text-gray-600">{pandal.contact}</span>
+                    <span className="text-xs text-gray-600">{mandal.contact}</span>
                   </div>
                 )}
               </div>
 
-              {pandal.special_features && pandal.special_features.length > 0 && (
+              {mandal.special_features && mandal.special_features.length > 0 && (
                 <div className="mb-3">
                   <p className="text-xs font-semibold text-gray-700 mb-1">Special Features:</p>
                   <div className="flex flex-wrap gap-1">
-                    {pandal.special_features.map((feature, index) => (
+                    {mandal.special_features.map((feature, index) => (
                       <span 
                         key={index}
                         className="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded"
@@ -370,23 +370,23 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
               )}
 
               {/* Crowd Information */}
-              {pandal.crowd_data && (
+              {mandal.crowd_data && (
                 <div className="mb-3 p-2 bg-gray-50 rounded-lg border">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-semibold text-gray-700">Live Crowd Status:</span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${CrowdService.getCrowdLevelColor(pandal.crowd_data.current_crowd_level)}`}>
-                      {CrowdService.getCrowdLevelEmoji(pandal.crowd_data.current_crowd_level)} {CrowdService.getCrowdLevelText(pandal.crowd_data.current_crowd_level)}
+                    <span className={`text-xs px-2 py-1 rounded-full ${CrowdService.getCrowdLevelColor(mandal.crowd_data.current_crowd_level)}`}>
+                      {CrowdService.getCrowdLevelEmoji(mandal.crowd_data.current_crowd_level)} {CrowdService.getCrowdLevelText(mandal.crowd_data.current_crowd_level)}
                     </span>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="flex items-center gap-1">
                       <Users className="w-3 h-3 text-gray-500" />
-                      <span className="text-gray-600">~{pandal.crowd_data.estimated_people_count} people</span>
+                      <span className="text-gray-600">~{mandal.crowd_data.estimated_people_count} people</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Timer className="w-3 h-3 text-gray-500" />
-                      <span className="text-gray-600">{CrowdService.formatWaitTime(pandal.crowd_data.darshan_wait_time)}</span>
+                      <span className="text-gray-600">{CrowdService.formatWaitTime(mandal.crowd_data.darshan_wait_time)}</span>
                     </div>
                   </div>
                   
@@ -394,11 +394,11 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
                     <div className="flex items-center gap-1 mb-1">
                       <span className="text-gray-500">Recommendation:</span>
                       <span className="text-gray-700 font-medium">
-                        {CrowdService.getRecommendation(pandal.crowd_data)}
+                        {CrowdService.getRecommendation(mandal.crowd_data)}
                       </span>
                     </div>
                     <div className="text-gray-400 text-xs">
-                      Updated: {pandal.crowd_data.last_updated.toLocaleTimeString()}
+                      Updated: {mandal.crowd_data.last_updated.toLocaleTimeString()}
                     </div>
                   </div>
                 </div>
@@ -406,9 +406,9 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
 
               <div className="flex gap-1 sm:gap-2">
                 <button
-                  onClick={() => handleGetDirections(pandal)}
+                  onClick={() => handleGetDirections(mandal)}
                   className="flex-1 bg-blue-600 text-white text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-1"
-                  aria-label={`Get directions to ${pandal.name}`}
+                  aria-label={`Get directions to ${mandal.name}`}
                 >
                   <Navigation className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span className="hidden sm:inline">Directions</span>
@@ -416,9 +416,9 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
                 </button>
                 
                 <button
-                  onClick={() => onPandalSelect(pandal)}
+                  onClick={() => onPandalSelect(mandal)}
                   className="flex-1 bg-orange-600 text-white text-xs sm:text-sm px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-orange-700 transition-colors"
-                  aria-label={`View details for ${pandal.name}`}
+                  aria-label={`View details for ${mandal.name}`}
                 >
                   Details
                 </button>

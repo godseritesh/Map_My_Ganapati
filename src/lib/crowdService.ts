@@ -1,32 +1,32 @@
-import { CrowdData, PandalLocation } from '@/types/pandal'
+import { CrowdData, PandalLocation } from '@/types/mandal'
 
 export class CrowdService {
   private static readonly FESTIVAL_START = new Date('2024-09-07') // Ganesh Chaturthi 2024
   private static readonly FESTIVAL_END = new Date('2024-09-17')   // Anant Chaturdashi
 
   /**
-   * Generate realistic crowd data for a pandal based on various factors
+   * Generate realistic crowd data for a mandal based on various factors
    */
-  static generateCrowdData(pandal: PandalLocation): CrowdData {
+  static generateCrowdData(mandal: PandalLocation): CrowdData {
     const now = new Date()
     const hour = now.getHours()
     const dayOfWeek = now.getDay()
     
-    // Base crowd level based on pandal popularity (from rating)
-    const popularityFactor = pandal.rating ? (pandal.rating - 3) / 2 : 0.5 // 0-1 scale
+    // Base crowd level based on mandal popularity (from rating)
+    const popularityFactor = mandal.rating ? (mandal.rating - 3) / 2 : 0.5 // 0-1 scale
     
     // Time-based factors
     const timeMultiplier = this.getTimeMultiplier(hour)
     const dayMultiplier = this.getDayMultiplier(dayOfWeek)
     const festivalMultiplier = this.getFestivalMultiplier(now)
     
-    // Special pandal multipliers
-    const pandalMultiplier = this.getPandalMultiplier(pandal.name)
+    // Special mandal multipliers
+    const pandalMultiplier = this.getPandalMultiplier(mandal.name)
     
     // Calculate crowd metrics
     const baseCrowd = popularityFactor * timeMultiplier * dayMultiplier * festivalMultiplier * pandalMultiplier
     const estimatedPeople = Math.round(baseCrowd * 1000 + Math.random() * 500) // 0-1500 people
-    const queueTime = this.calculateQueueTime(estimatedPeople, pandal.name)
+    const queueTime = this.calculateQueueTime(estimatedPeople, mandal.name)
     const darshanWait = Math.round(queueTime * 1.5) // Darshan takes longer than just queue
     
     return {
@@ -35,7 +35,7 @@ export class CrowdService {
       queue_time_minutes: queueTime,
       darshan_wait_time: darshanWait,
       last_updated: now,
-      peak_hours: this.getPeakHours(pandal.name),
+      peak_hours: this.getPeakHours(mandal.name),
       crowd_trend: this.getCrowdTrend(hour),
       is_live: true
     }
@@ -76,7 +76,7 @@ export class CrowdService {
   }
 
   /**
-   * Get pandal-specific multiplier based on fame
+   * Get mandal-specific multiplier based on fame
    */
   private static getPandalMultiplier(pandalName: string): number {
     const name = pandalName.toLowerCase()
@@ -88,7 +88,7 @@ export class CrowdService {
     if (name.includes('guruji')) return 1.1      // Traditional
     if (name.includes('kesariwada')) return 1.1  // Historical
     
-    return 1.0 // Regular pandals
+    return 1.0 // Regular mandals
   }
 
   /**
@@ -97,7 +97,7 @@ export class CrowdService {
   private static calculateQueueTime(peopleCount: number, pandalName: string): number {
     const basetime = Math.round(peopleCount / 50) // 50 people per minute base rate
     
-    // Famous pandals have slower processing
+    // Famous mandals have slower processing
     const name = pandalName.toLowerCase()
     let multiplier = 1.0
     
@@ -119,7 +119,7 @@ export class CrowdService {
   }
 
   /**
-   * Get peak hours for each pandal
+   * Get peak hours for each mandal
    */
   private static getPeakHours(pandalName: string): string[] {
     const name = pandalName.toLowerCase()

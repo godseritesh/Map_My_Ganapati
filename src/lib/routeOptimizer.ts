@@ -1,7 +1,7 @@
-import { PandalLocation, UserLocation } from '@/types/pandal'
+import { PandalLocation, UserLocation } from '@/types/mandal'
 
 export interface OptimizedRoute {
-  pandals: PandalLocation[]
+  mandals: PandalLocation[]
   totalDistance: number
   estimatedTime: number
   googleMapsUrl: string
@@ -26,41 +26,41 @@ export class RouteOptimizer {
   }
 
   // Simplified nearest neighbor algorithm for route optimization
-  static optimizeRoute(pandals: PandalLocation[], userLocation?: UserLocation): OptimizedRoute {
-    if (pandals.length === 0) {
+  static optimizeRoute(mandals: PandalLocation[], userLocation?: UserLocation): OptimizedRoute {
+    if (mandals.length === 0) {
       return {
-        pandals: [],
+        mandals: [],
         totalDistance: 0,
         estimatedTime: 0,
         googleMapsUrl: ''
       }
     }
 
-    if (pandals.length === 1) {
-      const googleMapsUrl = this.generateGoogleMapsUrl([pandals[0]], userLocation)
+    if (mandals.length === 1) {
+      const googleMapsUrl = this.generateGoogleMapsUrl([mandals[0]], userLocation)
       return {
-        pandals: pandals,
+        mandals: mandals,
         totalDistance: userLocation ? this.calculateDistance(
           userLocation.latitude, userLocation.longitude,
-          pandals[0].latitude, pandals[0].longitude
+          mandals[0].latitude, mandals[0].longitude
         ) : 0,
-        estimatedTime: 30, // Base time for one pandal
+        estimatedTime: 30, // Base time for one mandal
         googleMapsUrl
       }
     }
 
-    // Start from user location or first pandal
+    // Start from user location or first mandal
     let currentLat: number
     let currentLon: number
     let optimizedRoute: PandalLocation[] = []
-    let remainingPandals = [...pandals]
+    let remainingPandals = [...mandals]
     let totalDistance = 0
 
     if (userLocation) {
       currentLat = userLocation.latitude
       currentLon = userLocation.longitude
     } else {
-      // Start from the first pandal
+      // Start from the first mandal
       const firstPandal = remainingPandals.shift()!
       optimizedRoute.push(firstPandal)
       currentLat = firstPandal.latitude
@@ -75,7 +75,7 @@ export class RouteOptimizer {
         remainingPandals[0].latitude, remainingPandals[0].longitude
       )
 
-      // Find the nearest unvisited pandal
+      // Find the nearest unvisited mandal
       for (let i = 1; i < remainingPandals.length; i++) {
         const distance = this.calculateDistance(
           currentLat, currentLon,
@@ -87,7 +87,7 @@ export class RouteOptimizer {
         }
       }
 
-      // Add the nearest pandal to the route
+      // Add the nearest mandal to the route
       const nearestPandal = remainingPandals.splice(nearestIndex, 1)[0]
       optimizedRoute.push(nearestPandal)
       totalDistance += nearestDistance
@@ -97,14 +97,14 @@ export class RouteOptimizer {
 
     // Calculate estimated time (travel + visit time)
     const travelTimeMinutes = (totalDistance / 5) * 60 // Assuming 5 km/h walking speed
-    const visitTimeMinutes = optimizedRoute.length * 30 // 30 minutes per pandal
+    const visitTimeMinutes = optimizedRoute.length * 30 // 30 minutes per mandal
     const estimatedTime = Math.round(travelTimeMinutes + visitTimeMinutes)
 
     // Generate Google Maps URL for navigation
     const googleMapsUrl = this.generateNavigationUrl(optimizedRoute, userLocation)
 
     return {
-      pandals: optimizedRoute,
+      mandals: optimizedRoute,
       totalDistance: Math.round(totalDistance * 10) / 10, // Round to 1 decimal
       estimatedTime,
       googleMapsUrl
@@ -112,24 +112,24 @@ export class RouteOptimizer {
   }
 
   // Generate Google Maps URL with waypoints
-  static generateGoogleMapsUrl(pandals: PandalLocation[], userLocation?: UserLocation): string {
-    if (pandals.length === 0) return ''
+  static generateGoogleMapsUrl(mandals: PandalLocation[], userLocation?: UserLocation): string {
+    if (mandals.length === 0) return ''
 
     // Use the Google Maps Directions API format for better multi-stop navigation
     let url = 'https://www.google.com/maps/dir/'
     
-    // Add origin (user location or first pandal)
+    // Add origin (user location or first mandal)
     if (userLocation) {
       url += `${userLocation.latitude},${userLocation.longitude}/`
-    } else if (pandals.length > 0) {
-      // If no user location, start from first pandal
-      url += `${pandals[0].latitude},${pandals[0].longitude}/`
-      pandals = pandals.slice(1) // Remove first pandal from waypoints
+    } else if (mandals.length > 0) {
+      // If no user location, start from first mandal
+      url += `${mandals[0].latitude},${mandals[0].longitude}/`
+      mandals = mandals.slice(1) // Remove first mandal from waypoints
     }
 
-    // Add all pandals as waypoints
-    pandals.forEach((pandal) => {
-      url += `${pandal.latitude},${pandal.longitude}/`
+    // Add all mandals as waypoints
+    mandals.forEach((mandal) => {
+      url += `${mandal.latitude},${mandal.longitude}/`
     })
 
     // Add comprehensive URL parameters for better navigation
@@ -145,24 +145,24 @@ export class RouteOptimizer {
   }
 
   // Generate comprehensive Google Maps navigation URL for mobile-friendly experience
-  static generateNavigationUrl(pandals: PandalLocation[], userLocation?: UserLocation): string {
-    if (pandals.length === 0) return ''
+  static generateNavigationUrl(mandals: PandalLocation[], userLocation?: UserLocation): string {
+    if (mandals.length === 0) return ''
 
     // Use the Google Maps directions format for proper multi-stop navigation
     let url = 'https://www.google.com/maps/dir/'
     
-    // Add origin (user location or first pandal)
+    // Add origin (user location or first mandal)
     if (userLocation) {
       url += `${userLocation.latitude},${userLocation.longitude}/`
-    } else if (pandals.length > 0) {
-      // If no user location, start from first pandal
-      url += `${pandals[0].latitude},${pandals[0].longitude}/`
-      pandals = pandals.slice(1) // Remove first pandal from waypoints since it's now the origin
+    } else if (mandals.length > 0) {
+      // If no user location, start from first mandal
+      url += `${mandals[0].latitude},${mandals[0].longitude}/`
+      mandals = mandals.slice(1) // Remove first mandal from waypoints since it's now the origin
     }
 
-    // Add all remaining pandals as waypoints (separate stops)
-    pandals.forEach((pandal) => {
-      url += `${pandal.latitude},${pandal.longitude}/`
+    // Add all remaining mandals as waypoints (separate stops)
+    mandals.forEach((mandal) => {
+      url += `${mandal.latitude},${mandal.longitude}/`
     })
 
     // Add parameters for better navigation experience
@@ -178,8 +178,8 @@ export class RouteOptimizer {
   }
 
   // Alternative: Generate Google Maps URL using place names (more user-friendly)
-  static generateGoogleMapsUrlWithNames(pandals: PandalLocation[], userLocation?: UserLocation): string {
-    if (pandals.length === 0) return ''
+  static generateGoogleMapsUrlWithNames(mandals: PandalLocation[], userLocation?: UserLocation): string {
+    if (mandals.length === 0) return ''
 
     // Try using place names for better recognition
     let url = 'https://www.google.com/maps/dir/'
@@ -189,10 +189,10 @@ export class RouteOptimizer {
       url += `${userLocation.latitude},${userLocation.longitude}/`
     }
 
-    // Add pandal locations with names when possible
-    pandals.forEach(pandal => {
+    // Add mandal locations with names when possible
+    mandals.forEach(mandal => {
       // Use coordinates for accuracy but could enhance with encoded place names
-      url += `${pandal.latitude},${pandal.longitude}/`
+      url += `${mandal.latitude},${mandal.longitude}/`
     })
 
     const params = new URLSearchParams({
@@ -205,27 +205,27 @@ export class RouteOptimizer {
   }
 
   // Calculate route statistics without optimization (for comparison)
-  static calculateRouteStats(pandals: PandalLocation[], userLocation?: UserLocation): {
+  static calculateRouteStats(mandals: PandalLocation[], userLocation?: UserLocation): {
     totalDistance: number
     estimatedTime: number
   } {
-    if (pandals.length === 0) {
+    if (mandals.length === 0) {
       return { totalDistance: 0, estimatedTime: 0 }
     }
 
     let totalDistance = 0
-    let currentLat = userLocation?.latitude || pandals[0].latitude
-    let currentLon = userLocation?.longitude || pandals[0].longitude
+    let currentLat = userLocation?.latitude || mandals[0].latitude
+    let currentLon = userLocation?.longitude || mandals[0].longitude
 
-    // Calculate distance traveling through pandals in given order
-    for (const pandal of pandals) {
-      totalDistance += this.calculateDistance(currentLat, currentLon, pandal.latitude, pandal.longitude)
-      currentLat = pandal.latitude
-      currentLon = pandal.longitude
+    // Calculate distance traveling through mandals in given order
+    for (const mandal of mandals) {
+      totalDistance += this.calculateDistance(currentLat, currentLon, mandal.latitude, mandal.longitude)
+      currentLat = mandal.latitude
+      currentLon = mandal.longitude
     }
 
     const travelTimeMinutes = (totalDistance / 5) * 60 // 5 km/h walking speed
-    const visitTimeMinutes = pandals.length * 30 // 30 minutes per pandal
+    const visitTimeMinutes = mandals.length * 30 // 30 minutes per mandal
     const estimatedTime = Math.round(travelTimeMinutes + visitTimeMinutes)
 
     return {
@@ -238,16 +238,16 @@ export class RouteOptimizer {
   static getRouteDirections(optimizedRoute: OptimizedRoute, userLocation?: UserLocation): string[] {
     const directions: string[] = []
     
-    if (userLocation && optimizedRoute.pandals.length > 0) {
+    if (userLocation && optimizedRoute.mandals.length > 0) {
       directions.push(`Start from your location`)
     }
 
-    optimizedRoute.pandals.forEach((pandal, index) => {
+    optimizedRoute.mandals.forEach((mandal, index) => {
       const step = index + 1
-      directions.push(`${step}. Visit ${pandal.name}`)
-      if (pandal.crowd_data) {
-        directions.push(`   • Current crowd: ${pandal.crowd_data.current_crowd_level}`)
-        directions.push(`   • Wait time: ~${pandal.crowd_data.darshan_wait_time} minutes`)
+      directions.push(`${step}. Visit ${mandal.name}`)
+      if (mandal.crowd_data) {
+        directions.push(`   • Current crowd: ${mandal.crowd_data.current_crowd_level}`)
+        directions.push(`   • Wait time: ~${mandal.crowd_data.darshan_wait_time} minutes`)
       }
     })
 

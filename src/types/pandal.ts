@@ -47,7 +47,7 @@ export interface NavigationRoute {
 export interface Database {
   public: {
     Tables: {
-      pandals: {
+      mandals: {
         Row: PandalLocation
         Insert: Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>
         Update: Partial<Omit<PandalLocation, 'id' | 'created_at' | 'updated_at'>>

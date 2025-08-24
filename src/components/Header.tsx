@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { UserLocation } from '@/types/pandal'
+import { UserLocation } from '@/types/mandal'
 import SimpleLocationButton from './SimpleLocationButton'
 import { Search, Menu, X, MapPin, Compass, Shield } from 'lucide-react'
 import Link from 'next/link'
@@ -33,15 +33,15 @@ export default function Header({ onLocationUpdate, userLocation }: HeaderProps) 
           {/* Logo and Title */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white/20 rounded-full backdrop-blur-sm flex-shrink-0">
-              <img src="/markers/img1.png" alt="Ganapati" className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 object-contain" />
+              <img src="/markers/img1.png" alt="ganpati" className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 object-contain" />
             </div>
             <div className="min-w-0 flex-1">
               <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent truncate">
-                Ganapati Navigator
+                ganpati Navigator
               </h1>
               <p className="text-orange-100 text-xs sm:text-sm flex items-center gap-1 truncate">
                 <Compass className="w-2.5 h-2.5 sm:w-3 sm:h-3 flex-shrink-0" />
-                <span className="truncate">Find Pandals Near You</span>
+                <span className="truncate">Find mandals Near You</span>
               </p>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default function Header({ onLocationUpdate, userLocation }: HeaderProps) 
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-green-300 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
                   <p className="text-sm text-green-300 font-medium">Location Found</p>
-                  <p className="text-xs text-orange-200 truncate">Ready to find nearby pandals!</p>
+                  <p className="text-xs text-orange-200 truncate">Ready to find nearby mandals!</p>
                 </div>
               </div>
             ) : (
@@ -132,12 +132,12 @@ export default function Header({ onLocationUpdate, userLocation }: HeaderProps) 
         <div className="mt-3 sm:mt-4 bg-gradient-to-r from-yellow-400 to-orange-400 text-orange-900 px-3 sm:px-4 py-2 sm:py-3 rounded-xl shadow-lg backdrop-blur-sm">
           <p className="text-xs sm:text-sm md:text-base font-semibold text-center flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
             <span className="text-sm sm:text-base md:text-lg flex-shrink-0">🎉</span>
-            <span className="text-center">Ganesh Chaturthi 2024 - Navigate to your favorite pandals!</span>
+            <span className="text-center">Ganesh Chaturthi 2024 - Navigate to your favorite mandals!</span>
             <span className="text-sm sm:text-base md:text-lg flex-shrink-0">🎉</span>
           </p>
           {userLocation && (
             <p className="text-xs text-center mt-1 text-orange-800">
-              Showing pandals within 25km of your location
+              Showing mandals within 25km of your location
             </p>
           )}
         </div>
