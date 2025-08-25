@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Shield, MapPin, Clock, Star, Phone, Camera, Save, ArrowLeft, Eye, EyeOff } from 'lucide-react'
+import { Shield, MapPin, Clock, Star, Phone, Camera, Save, ArrowLeft, Eye, EyeOff, Trash2 } from 'lucide-react'
 import { PandalService } from '@/lib/pandalService'
+import { supabase } from '@/lib/supabase';
 import { UserLocation } from '@/types/mandal'
 import SimpleLocationButton from '@/components/SimpleLocationButton'
 import Link from 'next/link'
@@ -20,6 +21,7 @@ interface PandalFormData {
 }
 
 export default function AdminPage() {
+
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -28,6 +30,19 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
   const [recentPandals, setRecentPandals] = useState<any[]>([])
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const handleDelete = async (id: string) => {
+    setDeletingId(id);
+    try {
+      const { error } = await supabase.from('pandals').delete().eq('id', id);
+      if (error) throw error;
+      setRecentPandals(prev => prev.filter(mandal => mandal.id !== id));
+    } catch (error) {
+      alert('Failed to delete mandal.');
+    } finally {
+      setDeletingId(null);
+    }
+  } 
   
   const [formData, setFormData] = useState<PandalFormData>({
     name: '',
@@ -62,7 +77,6 @@ export default function AdminPage() {
       setAuthError('Invalid password')
       setPassword('')
     }
-  }
 
   const handleLocationUpdate = (location: UserLocation) => {
     setCurrentLocation(location)
@@ -270,6 +284,14 @@ export default function AdminPage() {
                   <div key={mandal.id} className="flex justify-between items-center text-xs sm:text-sm">
                     <span className="text-blue-700 font-medium truncate mr-2">{mandal.name}</span>
                     <span className="text-blue-600 flex-shrink-0">{mandal.addedAt}</span>
+                    <button
+                      className="ml-2 text-red-600 hover:text-red-800"
+                      aria-label="Delete mandal"
+                      disabled={deletingId === mandal.id}
+                      onClick={() => handleDelete(mandal.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 ))}
               </div>
@@ -469,4 +491,5 @@ export default function AdminPage() {
       </div>
     </div>
   )
+}
 }
