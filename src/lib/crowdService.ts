@@ -1,7 +1,7 @@
 import { CrowdData, PandalLocation } from '@/types/mandal'
 
 export class CrowdService {
-  private static readonly FESTIVAL_START = new Date('2024-09-07') // Ganesh Chaturthi 2024
+  private static readonly FESTIVAL_START = new Date('2024-09-07') // Ganesh Chaturthi 2025
   private static readonly FESTIVAL_END = new Date('2024-09-17')   // Anant Chaturdashi
 
   /**

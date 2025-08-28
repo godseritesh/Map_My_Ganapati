@@ -132,7 +132,7 @@ export default function Header({ onLocationUpdate, userLocation }: HeaderProps) 
         <div className="mt-3 sm:mt-4 bg-gradient-to-r from-yellow-400 to-orange-400 text-orange-900 px-3 sm:px-4 py-2 sm:py-3 rounded-xl shadow-lg backdrop-blur-sm">
           <p className="text-xs sm:text-sm md:text-base font-semibold text-center flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
             <span className="text-sm sm:text-base md:text-lg flex-shrink-0">🎉</span>
-            <span className="text-center">Ganesh Chaturthi 2024 - Navigate to your favorite mandals!</span>
+            <span className="text-center">Ganesh Chaturthi 2025 - Navigate to your favorite mandals!</span>
             <span className="text-sm sm:text-base md:text-lg flex-shrink-0">🎉</span>
           </p>
           {userLocation && (
