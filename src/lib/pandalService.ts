@@ -122,8 +122,8 @@ export class PandalService {
         name: "Shri Kasba Ganpati",
         description: "The first and most revered Ganapati mandal in Pune, established in 1893. Known as 'Gram Daivat' (presiding deity) of Pune city.",
         address: "159, Kasba Peth Road, Kasba Peth, Pune, Maharashtra 411002",
-        latitude: 18.5158,
-        longitude: 73.8567,
+        latitude: 18.51929571431685, 
+        longitude: 73.85736371054797,
         contact: "+91-20-2448-2394",
         timings: "4:00 AM - 11:00 PM",
         special_features: ["First Ganpati of Pune", "Historical Significance", "Traditional Rituals", "Panchamukhi Darshan"],
@@ -132,9 +132,9 @@ export class PandalService {
       {
         name: "Tambdi Jogeshwari Ganpati",
         description: "Known as the protector of Pune, established in 1893. Associated with the Tambdi Jogeshwari Temple dedicated to Goddess Durga.",
-        address: "33 (A) Budhwar Peth, Pune, Maharashtra 411002",
-        latitude: 18.5204,
-        longitude: 73.8567,
+        address: "GV83+JWX, Narsinha Chintamani Kelkar Road, Budhwar Peth, Pune, Maharashtra 411002",
+        latitude: 18.51668109629296, 
+        longitude: 73.85487682082749,
         contact: "+91-20-2445-2156",
         timings: "5:00 AM - 11:30 PM",
         special_features: ["Protector of Pune", "Divine Blessings", "Traditional Aarti", "Cultural Programs"],
@@ -155,8 +155,8 @@ export class PandalService {
         name: "Tulshibaug Ganpati",
         description: "Features the largest Ganpati idol in Pune, standing at 15 feet tall. Established in 1901 with magnificent decorations.",
         address: "Tulshibaug, Budhwar Peth, Pune, Maharashtra 411002",
-        latitude: 18.5189,
-        longitude: 73.8578,
+        latitude: 18.514255121814784, 
+        longitude: 73.85510363753406,
         contact: "+91-20-2445-7890",
         timings: "5:30 AM - 11:00 PM",
         special_features: ["Largest Idol (15 feet)", "Magnificent Decoration", "Shopping Area Nearby", "Cultural Events"],
@@ -165,9 +165,9 @@ export class PandalService {
       {
         name: "Guruji Talim Ganpati",
         description: "Second oldest mandal in Pune, established in 1887. Symbol of Hindu-Muslim unity and communal harmony.",
-        address: "84, Laxmi Road, Tulshibaug, Pune, Maharashtra 411030",
-        latitude: 18.5186,
-        longitude: 73.8581,
+        address: "GV83+7XQ, Jogeshwari Ln, opp. Guruji Talim Mandal, Budhwar Peth, Pune, Maharashtra 411002",
+        latitude: 18.515816344932453, 
+        longitude: 73.85500020237086,
         contact: "+91-20-2445-3421",
         timings: "6:00 AM - 10:30 PM",
         special_features: ["Second Oldest Mandal", "Unity Symbol", "Wrestling Training", "Community Service"],
@@ -176,9 +176,9 @@ export class PandalService {
       {
         name: "Kesariwada Ganpati",
         description: "Set up by Lokmanya Tilak as a symbol of unity and resistance. Historic significance in Indian independence movement.",
-        address: "Shivaji Road, Budhwar Peth, Pune, Maharashtra 411002",
-        latitude: 18.5201,
-        longitude: 73.8560,
+        address: "585-565, NC Kelkar Road, Narayan Peth, Pune, Maharashtra 411030",
+        latitude: 18.51649099816076, 
+        longitude: 73.84956833753412,
         contact: "+91-20-2445-6789",
         timings: "5:00 AM - 11:00 PM",
         special_features: ["Freedom Fighter Legacy", "Tilak's Vision", "Historical Importance", "Patriotic Programs"],
@@ -187,9 +187,9 @@ export class PandalService {
       {
         name: "Akhil Mandai Ganpati",
         description: "Famous for its eco-friendly celebrations and innovative themes. Popular among youth for its modern approach.",
-        address: "Mandai Road, Near Shaniwar Wada, Pune, Maharashtra 411002",
-        latitude: 18.5196,
-        longitude: 73.8553,
+        address: "Sharda ganpati, Sharda Ganpati Tempal, near mahtma phule mandai, shukruwar peth, pune, Maharashtra 411002",
+        latitude: 18.51191745469864,
+        longitude: 73.85613439527006,
         contact: "+91-20-2445-9876",
         timings: "6:00 AM - 10:00 PM",
         special_features: ["Eco-friendly", "Modern Themes", "Youth Participation", "Innovation Awards"],
@@ -198,14 +198,15 @@ export class PandalService {
       {
         name: "Shreemant Bhausaheb Rangari Ganpati",
         description: "Known for its traditional Puneri culture and authentic celebrations. Maintains age-old customs and rituals.",
-        address: "Bhavani Peth, Pune, Maharashtra 411042",
-        latitude: 18.5143,
-        longitude: 73.8612,
+        address: "662, 657, Bhau Rangari Road, Budhwar Peth, Pune, Maharashtra 411002",
+        latitude: 18.517768468212658, 
+        longitude: 73.85525427824294,
         contact: "+91-20-2448-5432",
         timings: "5:30 AM - 11:30 PM",
         special_features: ["Traditional Culture", "Authentic Celebrations", "Local Artisans", "Folk Music"],
         rating: 4.3
       }
+      
     ]
   }
 }
