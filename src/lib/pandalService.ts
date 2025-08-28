@@ -205,6 +205,72 @@ export class PandalService {
         timings: "5:30 AM - 11:30 PM",
         special_features: ["Traditional Culture", "Authentic Celebrations", "Local Artisans", "Folk Music"],
         rating: 4.3
+      },
+      {
+        name: "Shanipar Mandal Ganpati",
+        description: "Known for its traditional Puneri culture and authentic celebrations. Maintains age-old customs and rituals.",
+        address: "GV73+22V, Shashikant Gogvale Path, opp. Shanipar Bus Stop, Perugate, Sadashiv Peth, Pune, Maharashtra 411030",
+        latitude: 18.513241639373064, 
+        longitude: 73.85267832425227,
+        contact: "+91-20-2448-5432",
+        timings: "5:30 AM - 11:30 PM",
+        special_features: ["Traditional Culture", "Authentic Celebrations", "Local Artisans", "Folk Music"],
+        rating: 4.3
+      },
+      {
+        name: "Chhatrapati Rajaram Mandal",
+        description: "Known for its traditional Puneri culture and authentic celebrations. Maintains age-old customs and rituals.",
+        address: "871, Sadashiv Peth Rd, Perugate, Sadashiv Peth, Pune, Maharashtra 411030",
+        latitude: 18.512675949425187, 
+        longitude: 73.85267832425227,
+        contact: "+91-20-2448-5432",
+        timings: "5:30 AM - 11:30 PM",
+        special_features: ["Traditional Culture", "Authentic Celebrations", "Local Artisans", "Folk Music"],
+        rating: 4.3
+      },
+      {
+        name: "Natubaug Mandal Ganapati",
+        description: "Known for its traditional Puneri culture and authentic celebrations. Maintains age-old customs and rituals.",
+        address: "Want Namdev Chowk, 487-88, Mandai, Raviwar Peth, Pune, Maharashtra 411030",
+        latitude: 18.510842428699778, 
+        longitude: 73.85381443003071,
+        contact: "+91-20-2448-5432",
+        timings: "5:30 AM - 11:30 PM",
+        special_features: ["Traditional Culture", "Authentic Celebrations", "Local Artisans", "Folk Music"],
+        rating: 4.3
+      },
+      {
+        name: "Hutatma Babu Genu Mandal Ganapati",
+        description: "Known for its traditional Puneri culture and authentic celebrations. Maintains age-old customs and rituals.",
+        address: "GV74+P62, 1111, opp. Tilak Statue, Tulshibaug, Budhwar Peth, Pune, Maharashtra 411002",
+        latitude: 18.5140417583985, 
+        longitude: 73.85634187116439,
+        contact: "+91-20-2448-5432",
+        timings: "5:30 AM - 11:30 PM",
+        special_features: ["Traditional Culture", "Authentic Celebrations", "Local Artisans", "Folk Music"],
+        rating: 4.3
+      },
+      {
+        name: "Garud Ganpati Mandal Ganapati",
+        description: "Known for its traditional Puneri culture and authentic celebrations. Maintains age-old customs and rituals.",
+        address: "GR7W+F77, VG Kothari Path, Narayan Peth, Pune, Maharashtra 411030",
+        latitude: 18.513699773891993, 
+        longitude: 73.84564782074385,
+        contact: "+91-20-2448-5432",
+        timings: "5:30 AM - 11:30 PM",
+        special_features: ["Traditional Culture", "Authentic Celebrations", "Local Artisans", "Folk Music"],
+        rating: 4.3
+      },
+      {
+        name: "Shri Dashbhuja Ganpati temple",
+        description: "Known for its traditional Puneri culture and authentic celebrations. Maintains age-old customs and rituals.",
+        address: "GR4G+884, महर्षि Karve Nagar Rd, Pandurang Colony, Erandwane, Pune, Maharashtra 411004",
+        latitude: 18.50612061258219, 
+        longitude: 73.82574125059884,
+        contact: "+91-20-2448-5432",
+        timings: "5:30 AM - 11:30 PM",
+        special_features: ["Traditional Culture", "Authentic Celebrations", "Local Artisans", "Folk Music"],
+        rating: 4.3
       }
       
     ]
