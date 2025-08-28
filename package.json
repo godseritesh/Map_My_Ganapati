@@ -12,7 +12,7 @@
     "fetch-google": "npx ts-node --project scripts/tsconfig.json scripts/fetchGoogleData.ts"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.38.0",
+    "@supabase/supabase-js": "^2.56.0",
     "@vercel/speed-insights": "^1.2.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.445.0",
