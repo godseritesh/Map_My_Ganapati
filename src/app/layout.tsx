@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -33,6 +34,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
           {children}
+                {/* Vercel Analytics component for tracking */}
+                <Analytics />
         </div>
       </body>
     </html>
