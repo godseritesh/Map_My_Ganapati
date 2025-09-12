@@ -7,8 +7,16 @@ import Header from '@/components/Header'
 
 import CrowdSummary from '@/components/CrowdSummary'
 import SuggestionPanel from '@/components/SuggestionPanel'
+import SearchAndFilter from '@/components/SearchAndFilter'
 import { CrowdService } from '@/lib/crowdService'
-import { Phone, Clock, MapPin, Star, Navigation2, X, Users, Timer, TrendingUp, Route, BarChart3, Menu } from 'lucide-react'
+import { TouchButton, SwipeGesture, PullToRefresh } from '@/components/TouchEnhancements'
+import { PandalService } from '@/lib/pandalService'
+import { Phone, Clock, MapPin, Star, Navigation2, X, Users, Timer, TrendingUp, Route, BarChart3, Menu, Search } from 'lucide-react'
+import OnboardingTour from '@/components/OnboardingTour'
+import UserFeedback from '@/components/UserFeedback'
+import HelpCenter from '@/components/HelpCenter'
+import FloatingActionMenu from '@/components/FloatingActionMenu'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 // Dynamically import Map component to avoid SSR issues with Leaflet
 const Map = dynamic(() => import('@/components/Map'), {
@@ -30,6 +38,12 @@ export default function HomePage() {
   const [mandals, setPandals] = useState<PandalLocation[]>([])
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false)
   const [showCrowdOverview, setShowCrowdOverview] = useState<boolean>(false)
+  const [showOnboardingTour, setShowOnboardingTour] = useState<boolean>(false)
+  const [showSearchFilter, setShowSearchFilter] = useState<boolean>(false)
+  const [filteredMandals, setFilteredMandals] = useState<PandalLocation[]>([])
+  const [showUserFeedback, setShowUserFeedback] = useState<boolean>(false)
+  const [showHelpCenter, setShowHelpCenter] = useState<boolean>(false)
+  const [feedbackMandal, setFeedbackMandal] = useState<PandalLocation | null>(null)
 
   const handleLocationUpdate = (location: UserLocation) => {
     console.log('🎯 Page received location update:', location)
@@ -50,6 +64,14 @@ export default function HomePage() {
   const handlePandalsUpdate = (newPandals: PandalLocation[]) => {
     setPandals(newPandals)
   }
+
+  // Remove automatic welcome screen - only show tour when user requests it
+  // useEffect(() => {
+  //   const hasVisited = localStorage.getItem('ganpati_navigator_visited')
+  //   if (!hasVisited) {
+  //     setShowWelcomeScreen(true)
+  //   }
+  // }, [])
 
   // Debug useEffect to track userLocation changes
   useEffect(() => {
@@ -75,50 +97,113 @@ export default function HomePage() {
     }
   }
 
-  return (
-    <div className="h-screen flex flex-col">
-      <Header 
-        onLocationUpdate={handleLocationUpdate} 
-        userLocation={userLocation}
-      />
-      
-      <div className="flex-1 relative">
-        <Map 
-          userLocation={userLocation}
-          onPandalSelect={handlePandalSelect}
-          onPandalCountUpdate={handlePandalCountUpdate}
-          onPandalsUpdate={handlePandalsUpdate}
-        />
+  // Only start tour when user requests it from help center
+  const handleStartTour = () => {
+    setShowHelpCenter(false)
+    setShowOnboardingTour(true)
+    localStorage.setItem('ganpati_navigator_visited', 'true')
+  }
 
-        {/* Action Buttons */}
+  const handleCompleteTour = () => {
+    setShowOnboardingTour(false)
+  }
+
+  const handleSkipTour = () => {
+    setShowOnboardingTour(false)
+  }
+
+  const handleFilteredResults = (filtered: PandalLocation[]) => {
+    setFilteredMandals(filtered)
+  }
+
+  const handleOpenFeedback = (mandal: PandalLocation) => {
+    setFeedbackMandal(mandal)
+    setShowUserFeedback(true)
+  }
+
+  const handleSubmitFeedback = (feedback: any) => {
+    console.log('Feedback submitted:', feedback)
+    // Here you would typically send to your backend
+  }
+
+  return (
+    <ErrorBoundary>
+      <PullToRefresh onRefresh={async () => {
+        // Refresh mandals data
+        if (userLocation) {
+          const nearbyPandals = await PandalService.getNearbyPandals(
+            userLocation.latitude,
+            userLocation.longitude,
+            25
+          )
+          setPandals(nearbyPandals)
+          handlePandalsUpdate(nearbyPandals)
+        }
+      }}>
+        <div className="h-screen flex flex-col mobile-safe">
+          <Header 
+            onLocationUpdate={handleLocationUpdate} 
+            userLocation={userLocation}
+          />
+        
+        <div className="flex-1 relative overflow-hidden">
+          <Map 
+            userLocation={userLocation}
+            onPandalSelect={handlePandalSelect}
+            onPandalCountUpdate={handlePandalCountUpdate}
+            onPandalsUpdate={handlePandalsUpdate}
+          />
+
+        {/* Action Buttons - Enhanced Mobile Design with Touch Support */}
         {!selectedPandal && !showSuggestions && mandals.length > 0 && (
-          <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-10 flex flex-col gap-2">
-            <button
-              onClick={() => setShowSuggestions(true)}
-              className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-1 sm:gap-2 font-medium backdrop-blur-sm border border-white/20 text-sm sm:text-base"
-              aria-label="Explore suggested routes"
+          <div className="absolute top-2 mobile:top-4 left-2 mobile:left-4 z-10 flex flex-col gap-2 mobile:gap-3">
+            <TouchButton
+              onClick={() => setShowSearchFilter(true)}
+              className="btn-primary px-3 mobile:px-4 tablet:px-6 py-2 mobile:py-3 flex items-center gap-1 mobile:gap-2 text-adaptive-sm"
+              aria-label="Search and filter mandals"
             >
-              <Route className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="hidden sm:inline">Explore Routes</span>
-              <span className="sm:hidden">Routes</span>
-            </button>
+              <Search className="w-4 h-4 mobile:w-5 mobile:h-5" />
+              <span className="hidden mobile:inline">Search & Filter</span>
+              <span className="mobile:hidden">Search</span>
+            </TouchButton>
+            
+            <TouchButton
+              onClick={() => setShowSuggestions(true)}
+              className="btn-primary px-3 mobile:px-4 tablet:px-6 py-2 mobile:py-3 flex items-center gap-1 mobile:gap-2 text-adaptive-sm"
+              aria-label="Explore suggested routes"
+              style={{ background: 'linear-gradient(135deg, #ea580c, #dc2626)' }}
+            >
+              <Route className="w-4 h-4 mobile:w-5 mobile:h-5" />
+              <span className="hidden mobile:inline">Explore Routes</span>
+              <span className="mobile:hidden">Routes</span>
+            </TouchButton>
             
             {/* Crowd Overview Button - Only show on mobile/tablet */}
-            <button
+            <TouchButton
               onClick={() => setShowCrowdOverview(true)}
-              className="lg:hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-1 sm:gap-2 font-medium backdrop-blur-sm border border-white/20 text-sm sm:text-base"
+              className="desktop:hidden btn-primary px-3 mobile:px-4 tablet:px-6 py-2 mobile:py-3 flex items-center gap-1 mobile:gap-2 text-adaptive-sm"
               aria-label="View crowd overview"
+              style={{ background: 'linear-gradient(135deg, #7c3aed, #3b82f6)' }}
             >
-              <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="hidden sm:inline">Crowd Status</span>
-              <span className="sm:hidden">Crowd</span>
-            </button>
+              <BarChart3 className="w-4 h-4 mobile:w-5 mobile:h-5" />
+              <span className="hidden mobile:inline">Crowd Status</span>
+              <span className="mobile:hidden">Crowd</span>
+            </TouchButton>
           </div>
         )}
 
-        {/* Suggestion Panel */}
+        {/* Search and Filter Panel */}
+        <SearchAndFilter 
+          mandals={mandals}
+          onFilteredResults={handleFilteredResults}
+          onPandalSelect={handlePandalSelect}
+          isVisible={showSearchFilter}
+          onClose={() => setShowSearchFilter(false)}
+        />
+
+        {/* Suggestion Panel - Enhanced Responsive */}
         {showSuggestions && !selectedPandal && (
-          <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-auto z-10 max-w-full sm:max-w-md">
+          <div className="panel-mobile mobile:panel-tablet desktop:panel-desktop z-10 animate-slide-up">
             <SuggestionPanel 
               mandals={mandals}
               userLocation={userLocation}
@@ -128,39 +213,39 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Crowd Summary Panel - Always visible on desktop, toggleable on mobile */}
+        {/* Crowd Summary Panel - Enhanced Responsive Layout */}
         {!selectedPandal && !showSuggestions && mandals.length > 0 && (
           <>
             {/* Desktop version - always visible */}
-            <div className="hidden lg:block absolute top-2 sm:top-4 right-2 sm:right-4 max-w-xs sm:max-w-sm w-full z-10">
+            <div className="hidden desktop:block panel-desktop z-10">
               <CrowdSummary mandals={mandals} />
             </div>
             
             {/* Mobile/Tablet version - toggleable sidebar */}
             {showCrowdOverview && (
-              <div className="lg:hidden fixed inset-0 z-50 flex">
-                {/* Backdrop */}
+              <div className="desktop:hidden fixed inset-0 z-50 flex animate-fade-in">
+                {/* Enhanced Backdrop */}
                 <div 
-                  className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                  className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                   onClick={() => setShowCrowdOverview(false)}
                 />
                 
-                {/* Sidebar */}
-                <div className="relative bg-white/95 backdrop-blur-md w-full max-w-sm h-full overflow-y-auto shadow-2xl">
-                  <div className="sticky top-0 bg-white/95 backdrop-blur-md p-4 border-b border-gray-200 flex items-center justify-between">
-                    <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                {/* Enhanced Sidebar */}
+                <div className="relative card-mobile w-full max-w-sm h-full overflow-y-auto shadow-2xl animate-slide-down">
+                  <div className="sticky top-0 bg-white/95 backdrop-blur-md spacing-adaptive-sm border-b border-gray-200 flex items-center justify-between">
+                    <h2 className="heading-4 text-gray-800 flex items-center gap-2">
                       <BarChart3 className="w-5 h-5 text-blue-600" />
                       Live Crowd Overview
                     </h2>
                     <button
                       onClick={() => setShowCrowdOverview(false)}
-                      className="text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-colors"
+                      className="btn-ghost p-2"
                       aria-label="Close crowd overview"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
-                  <div className="p-4">
+                  <div className="spacing-adaptive-sm">
                     <CrowdSummary mandals={mandals} />
                   </div>
                 </div>
@@ -319,14 +404,23 @@ export default function HomePage() {
               </div>
             )}
 
-            <button
-              onClick={() => handleGetDirections(selectedPandal)}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 sm:py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 font-medium shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base"
-              aria-label={`Get directions to ${selectedPandal.name}`}
-            >
-              <Navigation2 className="w-4 h-4 sm:w-5 sm:h-5" />
-              Get Directions
-            </button>
+                <button
+                  onClick={() => handleOpenFeedback(selectedPandal)}
+                  className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-3 sm:py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 font-medium shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base mb-3"
+                  aria-label={`Share feedback for ${selectedPandal.name}`}
+                >
+                  <Star className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Share Feedback
+                </button>
+
+                <button
+                  onClick={() => handleGetDirections(selectedPandal)}
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 sm:py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 font-medium shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base"
+                  aria-label={`Get directions to ${selectedPandal.name}`}
+                >
+                  <Navigation2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Get Directions
+                </button>
           </div>
         )}
 
@@ -368,8 +462,63 @@ export default function HomePage() {
             )}
           </div>
 
+        {/* Search and Filter Panel */}
+        <SearchAndFilter 
+          mandals={mandals}
+          onFilteredResults={handleFilteredResults}
+          onPandalSelect={handlePandalSelect}
+          isVisible={showSearchFilter}
+          onClose={() => setShowSearchFilter(false)}
+        />
 
+        {/* Floating Action Menu for Mobile */}
+        <div className="block lg:hidden">
+          <FloatingActionMenu 
+            onSearchClick={() => setShowSearchFilter(true)}
+            onRoutesClick={() => setShowSuggestions(true)}
+            onHelpClick={() => setShowHelpCenter(true)}
+            onLocationClick={() => {
+              // This will trigger the location button in the floating menu
+              // The actual location update is handled by SimpleLocationButton
+            }}
+            onCrowdClick={() => setShowCrowdOverview(true)}
+            userLocation={userLocation}
+          />
+        </div>
+
+        {/* User Feedback Modal */}
+        {showUserFeedback && feedbackMandal && (
+          <UserFeedback 
+            mandal={feedbackMandal}
+            isVisible={showUserFeedback}
+            onClose={() => {
+              setShowUserFeedback(false)
+              setFeedbackMandal(null)
+            }}
+            onSubmitFeedback={handleSubmitFeedback}
+          />
+        )}
+
+        {/* Help Center - Entry point for onboarding tour */}
+        <HelpCenter 
+          isVisible={showHelpCenter}
+          onClose={() => setShowHelpCenter(false)}
+          onStartTour={() => {
+            setShowHelpCenter(false)
+            setShowOnboardingTour(true)
+          }}
+        />
+
+        {/* Onboarding Tour - Only when user requests it */}
+        <OnboardingTour 
+          isVisible={showOnboardingTour}
+          onComplete={handleCompleteTour}
+          onSkip={handleSkipTour}
+        />
+
+        </div>
       </div>
-    </div>
+      </PullToRefresh>
+    </ErrorBoundary>
   )
 }

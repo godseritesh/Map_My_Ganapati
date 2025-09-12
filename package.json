@@ -9,6 +9,7 @@
     "lint": "next lint",
     "seed": "npx ts-node --project scripts/tsconfig.json scripts/seedData.ts",
     "setup-db": "npx ts-node --project scripts/tsconfig.json scripts/setupDatabase.ts",
+    "test-connection": "npx ts-node --project scripts/tsconfig.json scripts/testConnection.ts",
     "fetch-google": "npx ts-node --project scripts/tsconfig.json scripts/fetchGoogleData.ts"
   },
   "dependencies": {

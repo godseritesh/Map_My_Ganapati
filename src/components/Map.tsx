@@ -6,6 +6,7 @@ import { Icon, divIcon } from 'leaflet'
 import { PandalLocation, UserLocation } from '@/types/mandal'
 import { PandalService } from '@/lib/pandalService'
 import { CrowdService } from '@/lib/crowdService'
+import { MapLoadingSkeleton } from './LoadingStates'
 import { Navigation, Clock, Star, Phone, MapPin, Users, Timer } from 'lucide-react'
 
 // Fix for default markers in react-leaflet
@@ -263,20 +264,7 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
   }
 
   if (loading) {
-    return (
-      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
-        <div className="text-center p-8">
-          <div className="relative">
-            <div className="animate-spin rounded-full h-16 w-16 border-4 border-orange-200 border-t-orange-600 mx-auto"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img src="/markers/img1.png" alt="Ganpati" className="w-12 h-12 animate-pulse object-contain" />
-            </div>
-          </div>
-          <p className="mt-6 text-gray-700 font-medium">Loading Ganpati mandals...</p>
-          <p className="mt-2 text-sm text-gray-500">Finding the best mandals near you</p>
-        </div>
-      </div>
-    )
+    return <MapLoadingSkeleton />
   }
 
   return (
@@ -285,6 +273,8 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
       zoom={13}
       style={{ height: '100%', width: '100%' }}
       className="z-0"
+      id="map-container"
+      aria-label="Interactive map showing Ganpati mandals"
     >
       <ChangeView center={mapCenter} />
       
@@ -316,39 +306,54 @@ export default function Map({ userLocation, onPandalSelect, onPandalCountUpdate,
           key={mandal.id}
           position={[mandal.latitude, mandal.longitude]}
           icon={createPandalIcon(mandal)}
+          eventHandlers={{
+            click: () => {
+              onPandalSelect(mandal)
+            }
+          }}
         >
-          <Popup maxWidth={window.innerWidth < 768 ? 280 : 320} className="mandal-popup">
-            <div className="p-2 sm:p-3">
-              <h3 className="font-bold text-base sm:text-lg text-orange-700 mb-2 leading-tight">
+          <Popup 
+            maxWidth={window.innerWidth < 375 ? 260 : window.innerWidth < 640 ? 300 : window.innerWidth < 768 ? 320 : 380} 
+            className="mandal-popup"
+            closeButton={true}
+            autoClose={false}
+            keepInView={true}
+            autoPan={true}
+            autoPanPadding={[20, 20]}
+          >
+            <div className="spacing-adaptive-xs">
+              <h3 className="heading-4 text-orange-700 mb-2 leading-tight text-balance">
                 {mandal.name}
               </h3>
               
-              <p className="text-xs sm:text-sm text-gray-600 mb-3 leading-relaxed">
+              <p className="text-adaptive-sm text-gray-600 mb-3 leading-relaxed text-balance">
                 {mandal.description}
               </p>
 
               <div className="space-y-2 mb-3">
                 <div className="flex items-start gap-2">
-                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-xs text-gray-600 leading-relaxed">{mandal.address}</span>
+                  <MapPin className="w-3 h-3 mobile:w-4 mobile:h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-adaptive-xs text-gray-700 leading-relaxed">{mandal.address}</span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 flex-shrink-0" />
-                  <span className="text-xs text-gray-600">{mandal.timings}</span>
+                  <Clock className="w-3 h-3 mobile:w-4 mobile:h-4 text-gray-500 flex-shrink-0" />
+                  <span className="text-adaptive-xs text-gray-700 font-medium">{mandal.timings}</span>
                 </div>
 
                 {mandal.rating && (
                   <div className="flex items-center gap-2">
-                    <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-500 flex-shrink-0" />
-                    <span className="text-xs text-gray-600">{mandal.rating}/5</span>
+                    <Star className="w-3 h-3 mobile:w-4 mobile:h-4 text-yellow-500 flex-shrink-0" />
+                    <span className="text-adaptive-xs text-gray-700 font-medium">
+                      {mandal.rating}/5 Rating
+                    </span>
                   </div>
                 )}
 
                 {mandal.contact && (
                   <div className="flex items-center gap-2">
-                    <Phone className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 flex-shrink-0" />
-                    <span className="text-xs text-gray-600">{mandal.contact}</span>
+                    <Phone className="w-3 h-3 mobile:w-4 mobile:h-4 text-gray-500 flex-shrink-0" />
+                    <span className="text-adaptive-xs text-gray-700">{mandal.contact}</span>
                   </div>
                 )}
               </div>
